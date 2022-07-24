@@ -2,6 +2,38 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-node-browsers
+      - image: cimg/php:8.1.0-node
     steps:
-      - run: echo "Hello World"
+      - checkout
+      - run:
+          working_directory: ./src
+          command: sudo composer self-update --2
+      - restore_cache:
+          key: composer-v1-{{ checksum "src/composer.lock" }}
+      - run:
+          working_directory: ./src
+          command: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "src/composer.lock" }}
+          paths:
+            - vendor
+      - restore_cache:
+          key: npm-v1-{{ checksum "src/package-lock.json" }}
+      - run:
+          name: npm ci
+          working_directory: ./src
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
+      - save_cache:
+          key: npm-v1-{{ checksum "src/package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          working_directory: ./src
+          command: npm run dev
+      - run:
+          name: php test
+          working_directory: ./src
+          command: vendor/bin/phpunit
