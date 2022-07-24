@@ -3,7 +3,7 @@ up:
 build:
 	docker compose build
 laravel-install:
-	docker compose exec app composer create-project --prefer-dist laravel/laravel .
+	docker compose exec app composer create-project --prefer-dist "laravel/laravel=8.*" .
 create-project:
 	mkdir -p src
 	@make build
