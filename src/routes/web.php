@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,10 +21,15 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Auth::routes();
 
 Route::resource('/menus', MenuController::class)->except(['show', 'destroy'])->middleware('auth');
-// Route::get('/menus/show', [MenuController::class, 'show'])->name('menus.show')->middleware('auth');
 Route::prefix('menus')->name('menus.')->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/show', [MenuController::class, 'show'])->name('show');
+        Route::get('/delete', [MenuController::class, 'delete'])->name('delete');
         Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+    });
+});
+
+Route::prefix('users')->name('users.')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('/mypage', [UserController::class, 'show'])->name('show');
     });
 });

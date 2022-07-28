@@ -34,13 +34,13 @@ class MenuControllerTest extends TestCase
         // ログインする
         $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'password']);
 
-        $response = $this->get(route('menus.show'));
-        $response->assertStatus(200)->assertViewIs('menus.show');
+        $response = $this->get(route('menus.delete'));
+        $response->assertStatus(200)->assertViewIs('menus.delete');
 
         $genre = Genre::factory()->create();
         $menu = Menu::factory()->create();
 
         $response = $this->post(route('menus.destroy'), ['menu_id' => $menu->id, 'genre_id' => $menu->genre_id]);
-        $response->assertStatus(302)->assertRedirect('menus/show');
+        $response->assertStatus(302)->assertRedirect('menus/delete');
     }
 }

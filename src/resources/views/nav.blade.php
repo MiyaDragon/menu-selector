@@ -18,7 +18,7 @@
 
         @auth
         <li class="nav-item">
-            <a class="nav-link" href="">マイページ</a>
+            <a class="nav-link" href="{{ route('users.show') }}">マイページ</a>
         </li>
         @endauth
 

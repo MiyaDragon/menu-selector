@@ -32,11 +32,11 @@ class MenuController extends Controller
         return redirect()->route('home');
     }
 
-    public function show(Request $request)
+    public function delete(Request $request)
     {
         $menus = Menu::where('user_id', $request->user()->id)->get();
 
-        return view('menus.show', ['menus' => $menus]);
+        return view('menus.delete', ['menus' => $menus]);
     }
 
     public function destroy(Request $request)
@@ -46,6 +46,6 @@ class MenuController extends Controller
 
         $menu->delete();
 
-        return redirect()->route('menus.show');
+        return redirect()->route('menus.delete');
     }
 }
