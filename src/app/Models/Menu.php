@@ -14,4 +14,9 @@ class Menu extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function genre(): BelongsTo
+    {
+        return $this->belongsTo(Genre::class);
+    }
 }
