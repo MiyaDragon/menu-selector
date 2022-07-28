@@ -30,6 +30,10 @@ Route::prefix('menus')->name('menus.')->group(function () {
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::middleware('auth')->group(function () {
+        // Route::get('/{user}/mypage', [UserController::class, 'show'])->name('show');
         Route::get('/mypage', [UserController::class, 'show'])->name('show');
+        // Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+        Route::post('/{user}', [UserController::class, 'update'])->name('update');
     });
 });
