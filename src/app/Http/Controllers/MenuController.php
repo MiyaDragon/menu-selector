@@ -16,14 +16,18 @@ class MenuController extends Controller
 
     public function store(MenuRequest $request, Menu $menu, Genre $genre)
     {
-        $genre_registed = Genre::where('name', $request->genre)->first();
+        $genre_registed = Genre::where('name', $request->genre)
+            ->where('user_id', $request->user()->id)
+            ->first();
         if (is_null($genre_registed)) {
             $genre->name = $request->genre;
             $genre->user_id = $request->user()->id;
             $genre->save();
         }
         #もっとスマートにしたい
-        $genre = Genre::where('name', $request->genre)->first();
+        $genre = Genre::where('name', $request->genre)
+            ->where('user_id', $request->user()->id)
+            ->first();
         $menu->name = $request->name;
         $menu->genre_id = $genre->id;
         $menu->user_id = $request->user()->id;
