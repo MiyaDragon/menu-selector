@@ -14,7 +14,7 @@
             <div class="form-group">
                 <a href="{{ route('menus.create') }}" class="btn btn-block btn-primary mt-4">献立登録</a>
                 <a href="{{ route('menus.delete') }}" class="btn btn-block btn-primary mt-4">献立削除</a>
-                <a href="{{ route('menus.create') }}" class="btn btn-block btn-primary mt-4">登録情報変更</a>
+                <a href="{{ route('users.edit') }}" class="btn btn-block btn-primary mt-4">登録情報変更</a>
             </div>
 
         </div>

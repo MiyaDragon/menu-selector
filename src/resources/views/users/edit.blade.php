@@ -1,28 +1,29 @@
 @extends('app')
 
-@section('title', 'ユーザー登録')
+@section('title', 'ユーザー情報変更')
 
 @section('content')
+@include('nav')
 <div class="container" style="max-width: 540px">
-    <h1 class="text-center">献立セレクター</h1>
+    <h1 class="text-center mt-2">献立セレクター</h1>
     <div class="card mt-3">
         <div class="card-body">
 
-            <h2 class="card-title text-center mt-2">ユーザー登録</h2>
+            <h2 class="card-title text-center mt-2">ユーザー情報変更</h2>
 
             @include('error_card_list')
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="">
                 @csrf
 
                 <div class="form-group">
                     <label for="name">ユーザー名</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
+                    <input type="text" class="form-control" id="name" name="name" required value="">
                 </div>
 
                 <div class="form-group">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}">
+                    <input type="text" class="form-control" id="email" name="email" required value="">
                 </div>
 
                 <div class="form-group">
@@ -35,7 +36,7 @@
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary mt-4">ユーザー登録</button>
+                <button type="submit" class="btn btn-block btn-primary mt-4">変更</button>
 
             </form>
         </div>
