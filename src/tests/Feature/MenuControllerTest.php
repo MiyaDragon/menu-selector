@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Menu;
+use App\Models\Genre;
 
 class MenuControllerTest extends TestCase
 {
@@ -23,5 +25,22 @@ class MenuControllerTest extends TestCase
 
         $response = $this->post(route('menus.store'), ['name' => 'カレーライス', 'genre' => '洋食', 'user_id' => $user->id]);
         $response->assertStatus(302)->assertRedirect('/');
+    }
+
+    public function testDelete()
+    {
+        $user = User::factory()->create();
+
+        // ログインする
+        $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'password']);
+
+        $response = $this->get(route('menus.show'));
+        $response->assertStatus(200)->assertViewIs('menus.show');
+
+        $genre = Genre::factory()->create();
+        $menu = Menu::factory()->create();
+
+        $response = $this->post(route('menus.destroy'), ['menu_id' => $menu->id, 'genre_id' => $menu->genre_id]);
+        $response->assertStatus(302)->assertRedirect('menus/show');
     }
 }

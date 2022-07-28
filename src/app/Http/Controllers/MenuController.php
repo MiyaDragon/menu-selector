@@ -31,4 +31,21 @@ class MenuController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function show(Request $request)
+    {
+        $menus = Menu::where('user_id', $request->user()->id)->get();
+
+        return view('menus.show', ['menus' => $menus]);
+    }
+
+    public function destroy(Request $request)
+    {
+
+        $menu = Menu::find($request->menu_id);
+
+        $menu->delete();
+
+        return redirect()->route('menus.show');
+    }
 }

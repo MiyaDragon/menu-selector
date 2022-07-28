@@ -19,4 +19,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::resource('/menus', MenuController::class)->middleware('auth');
+Route::resource('/menus', MenuController::class)->except(['show', 'destroy'])->middleware('auth');
+// Route::get('/menus/show', [MenuController::class, 'show'])->name('menus.show')->middleware('auth');
+Route::prefix('menus')->name('menus.')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('/show', [MenuController::class, 'show'])->name('show');
+        Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+    });
+});
