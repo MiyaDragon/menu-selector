@@ -14,24 +14,15 @@ class MenuController extends Controller
         return view('menus.create');
     }
 
-    public function store(MenuRequest $request, Menu $menu, Genre $genre)
+    public function store(MenuRequest $request)
     {
-        $genre_registed = Genre::where('name', $request->genre)
-            ->where('user_id', $request->user()->id)
-            ->first();
-        if (is_null($genre_registed)) {
-            $genre->name = $request->genre;
-            $genre->user_id = $request->user()->id;
-            $genre->save();
-        }
-        #もっとスマートにしたい
-        $genre = Genre::where('name', $request->genre)
-            ->where('user_id', $request->user()->id)
-            ->first();
-        $menu->name = $request->name;
-        $menu->genre_id = $genre->id;
-        $menu->user_id = $request->user()->id;
-        $menu->save();
+        $user = $request->user();
+
+        $genre = Genre::firstOrCreate(['name' => $request->genre]);
+        $menu = Menu::firstOrCreate(['name' => $request->name]);
+        $user->genres()->syncWithoutDetaching($genre);
+        $user->menus()->syncWithoutDetaching($menu);
+        $menu->genres()->syncWithoutDetaching($genre);
 
         return redirect()->route('home');
     }

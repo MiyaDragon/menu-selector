@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,34 +11,28 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()) {
-            $genres = Genre::where('user_id', Auth::id())->get();
+            $user = Auth::user();
+            $genres = $user->genres;
         } else {
             $genres = Genre::all();
         }
-        $data = [
-            'genres' => $genres,
-            'menu' => '今日の献立は...',
-        ];
-        return view('home', $data);
+
+        return view('home', ['genres' => $genres]);
     }
 
     public function show(Request $request)
     {
+        $user = Auth::user();
         if ($request->genre_id === 'all') {
-            $menu = Menu::inRandomOrder()
-                ->get()
-                ->where('user_id', Auth::id())
-                ->first();
+            $menu = $user->menus->random();
         } else {
-            $menu = Menu::inRandomOrder()
-                ->get()
-                ->where('genre_id', $request->genre_id)
-                ->first();
+            $genre = $user->genres->where('id', $request->genre_id)->first();
+            $menu = $genre->menus->random();
         }
-        $genres = Genre::where('user_id', Auth::id())->get();
+        $genres = $user->genres;
         $data = [
             'genres' => $genres,
-            'menu' => $menu->name,
+            'menu' => $menu,
         ];
 
         return view('home', $data);

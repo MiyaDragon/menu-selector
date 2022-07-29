@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class MenuRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:menus|max:30',
+            'name' => ['required', 'max:30'],
             'genre' => 'required|max:20',
         ];
     }
