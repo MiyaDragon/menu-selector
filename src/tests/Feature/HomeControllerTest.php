@@ -17,7 +17,6 @@ class HomeControllerTest extends TestCase
     public function testIndex()
     {
         $user = User::factory()->create();
-        $genre = Genre::factory()->create();
 
         $response = $this->get(route('home'));
 

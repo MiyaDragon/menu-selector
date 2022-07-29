@@ -27,20 +27,20 @@ class MenuControllerTest extends TestCase
         $response->assertStatus(302)->assertRedirect('/');
     }
 
-    public function testDelete()
-    {
-        $user = User::factory()->create();
+    // public function testDelete()
+    // {
+    //     $user = User::factory()->create();
 
-        // ログインする
-        $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'password']);
+    //     // ログインする
+    //     $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'password']);
 
-        $response = $this->get(route('menus.delete'));
-        $response->assertStatus(200)->assertViewIs('menus.delete');
+    //     $response = $this->get(route('menus.delete'));
+    //     $response->assertStatus(200)->assertViewIs('menus.delete');
 
-        $genre = Genre::factory()->create();
-        $menu = Menu::factory()->create();
+    //     $genre = Genre::factory()->create();
+    //     $menu = Menu::factory()->create();
 
-        $response = $this->post(route('menus.destroy'), ['menu_id' => $menu->id, 'genre_id' => $menu->genre_id]);
-        $response->assertStatus(302)->assertRedirect('menus/delete');
-    }
+    //     $response = $this->post(route('menus.destroy'), ['menu_id' => $menu->id, 'genre_id' => $menu->genre_id]);
+    //     $response->assertStatus(302)->assertRedirect('menus/delete');
+    // }
 }
