@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,8 +27,7 @@ class HomeController extends Controller
         if ($request->genre_id === 'all') {
             $menu = $user->menus->random();
         } else {
-            $genre = $user->genres->where('id', $request->genre_id)->first();
-            $menu = $genre->menus->random();
+            $menu = $user->menus->where('genre_id', $request->genre_id)->random();
         }
         $genres = $user->genres;
         $data = [

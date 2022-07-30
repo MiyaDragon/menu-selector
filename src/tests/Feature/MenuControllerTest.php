@@ -24,7 +24,7 @@ class MenuControllerTest extends TestCase
         $response->assertStatus(200)->assertViewIs('menus.create');
 
         $response = $this->post(route('menus.store'), ['name' => 'カレーライス', 'genre' => '洋食', 'user_id' => $user->id]);
-        $response->assertStatus(302)->assertRedirect('/');
+        $response->assertStatus(302)->assertRedirect('/menus/create');
     }
 
     // public function testDelete()

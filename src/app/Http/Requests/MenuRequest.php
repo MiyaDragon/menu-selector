@@ -26,16 +26,16 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:30'],
-            'genre' => 'required|max:20',
+            'menu_name' => ['required', Rule::unique('menus', 'name')->where('user_id', Auth::user()->id), 'max:30'],
+            'genre_name' => ['required', 'max:20'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => '献立名',
-            'genre' => 'ジャンル名',
+            'menu_name' => '献立名',
+            'genre_name' => 'ジャンル名',
         ];
     }
 }

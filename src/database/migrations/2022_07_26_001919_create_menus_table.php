@@ -15,7 +15,9 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('genre_id')->constrained('genres');
             $table->timestamps();
         });
     }
