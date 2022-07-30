@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,13 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function genres(): BelongsToMany
+    public function menus(): HasMany
     {
-        return $this->belongsToMany(Genre::class, 'user_genre')->withTimestamps();
+        return $this->hasMany(Menu::class);
     }
 
-    public function menus(): BelongsToMany
+    public function genres(): HasMany
     {
-        return $this->belongsToMany(Menu::class, 'user_menu')->withTimestamps();
+        return $this->hasMany(Genre::class);
     }
 }

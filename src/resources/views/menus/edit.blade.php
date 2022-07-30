@@ -9,24 +9,25 @@
     <div class="card mt-3">
         <div class="card-body">
 
-            <h2 class="card-title text-center mt-2">献立登録</h2>
+            <h2 class="card-title text-center mt-2">献立編集</h2>
 
             @include('error_card_list')
 
-            <form method="POST" action="{{ route('menus.store') }}">
+            <form method="POST" action="{{ route('menus.update', ['menu' => $menu] ) }}">
+                @method('PUT')
                 @csrf
 
                 <div class="form-group">
                     <label for="menu_name">献立名</label>
-                    <input type="text" class="form-control" id="menu_name" name="menu_name" required value="{{ old('menu_name') }}">
+                    <input type="text" class="form-control" id="menu_name" name="menu_name" required value="{{ $menu->name }}">
                 </div>
 
                 <div class="form-group">
                     <label for="genre_name">ジャンル名</label>
-                    <input type="text" class="form-control" id="genre_name" name="genre_name" required value="{{ old('genre_name') }}">
+                    <input type="text" class="form-control" id="genre_name" name="genre_name" required value="{{ $menu->genre->name }}">
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary mt-4">献立登録</button>
+                <button type="submit" class="btn btn-block btn-primary mt-4">更新する</button>
 
             </form>
         </div>

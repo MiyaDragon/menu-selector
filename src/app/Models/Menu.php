@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Menu extends Model
 {
@@ -13,11 +12,11 @@ class Menu extends Model
 
     protected $fillable = [
         'name',
-        'user_id',
+        'genre_id',
     ];
 
-    public function genres(): BelongsToMany
+    public function genre(): BelongsTo
     {
-        return $this->belongsToMany(Genre::class, 'menu_genre')->withTimestamps();
+        return $this->belongsTo(Genre::class);
     }
 }
