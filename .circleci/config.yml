@@ -47,7 +47,6 @@ jobs:
           name: deploy
           command: |
             ssh -o StrictHostKeyChecking=no -t webapp@${HOST_NAME} "cd menu-selector && \
-              git reset HEAD --hard && \
               git pull origin main && \
               cd src && \
               composer install -n --no-dev --prefer-dist && \
