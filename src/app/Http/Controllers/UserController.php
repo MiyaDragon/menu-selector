@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function show(User $user)
+    public function show()
     {
-        return view('users.show', ['user' => $user]);
+        return view('users.show');
     }
 
-    public function edit(User $user)
+    public function edit()
     {
-        // return view('users.edit', ['user' => $user]);
-        return view('users.edit');
+        $user = Auth::user();
+        return view('users.edit', ['user' => $user]);
     }
 
-    public function update()
+    public function update(UserRequest $request)
     {
+        $user = Auth::user();
+        $user->fill($request->all())->save();
+
+        return redirect()->route('users.show');
     }
 }

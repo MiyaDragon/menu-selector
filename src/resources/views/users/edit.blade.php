@@ -13,17 +13,18 @@
 
             @include('error_card_list')
 
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('users.update') }}">
+                @method('PUT')
                 @csrf
 
                 <div class="form-group">
                     <label for="name">ユーザー名</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="">
+                    <input type="text" class="form-control" id="name" name="name" required value="{{ $user->name }}">
                 </div>
 
                 <div class="form-group">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control" id="email" name="email" required value="">
+                    <input type="text" class="form-control" id="email" name="email" required value="{{ $user->email }}">
                 </div>
 
                 <div class="form-group">
