@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        $menus = $user->menus;
+        return view('menus.index', ['menus' => $menus]);
+    }
+
     public function create()
     {
         return view('menus.create');
@@ -36,13 +43,6 @@ class MenuController extends Controller
         return redirect()->route('menus.create');
     }
 
-    public function index()
-    {
-        $user = Auth::user();
-        $menus = $user->menus;
-        return view('menus.index', ['menus' => $menus]);
-    }
-
     public function edit(Menu $menu)
     {
         return view('menus.edit', ['menu' => $menu]);
@@ -63,25 +63,17 @@ class MenuController extends Controller
         $menu->genre_id = $genre->id;
         $menu->save();
 
-        $menus = $user->menus;
-
-        return redirect()->route('menus.index', ['menus' => $menus]);
+        return redirect()->route('menus.index');
     }
 
-    public function delete(Request $request)
+    public function destroy(Menu $menu)
     {
-        $menus = Menu::where('user_id', $request->user()->id)->get();
-
-        return view('menus.delete', ['menus' => $menus]);
-    }
-
-    public function destroy(Request $request)
-    {
-
-        $menu = Menu::find($request->menu_id);
-
         $menu->delete();
 
-        return redirect()->route('menus.delete');
+        if (Menu::where('genre_id', $menu->genre_id)->count() < 1) {
+            Genre::destroy($menu->genre_id);
+        }
+
+        return redirect()->route('menus.index');
     }
 }
