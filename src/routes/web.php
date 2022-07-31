@@ -21,11 +21,10 @@ Route::post('/', [HomeController::class, 'show'])->name('show');
 
 Auth::routes();
 
-Route::resource('/menus', MenuController::class)->except(['show', 'destroy'])->middleware('auth');
+Route::resource('/menus', MenuController::class)->except(['show'])->middleware('auth');
 Route::prefix('menus')->name('menus.')->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/delete', [MenuController::class, 'delete'])->name('delete');
-        Route::post('/destroy', [MenuController::class, 'destroy'])->name('destroy');
+        // Route::get('/delete', [MenuController::class, 'delete'])->name('delete');
     });
 });
 

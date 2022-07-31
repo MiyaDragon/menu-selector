@@ -14,8 +14,6 @@ class MenuFactory extends Factory
     public function definition()
     {
         return [
-            'genre_id' => 1,
-            'user_id' => 1,
             'name' => 'カレーライス',
         ];
     }
