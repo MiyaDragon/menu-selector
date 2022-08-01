@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-class MenuRequest extends FormRequest
+class MenuUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class MenuRequest extends FormRequest
         return [
             'menu_name' => [
                 'required',
-                Rule::unique('menus', 'name')->where('user_id', Auth::user()->id),
+                Rule::unique('menus', 'name')->ignore(Auth::user()->id, 'user_id'),
                 'max:30'
             ],
             'genre_name' => ['required', 'max:20'],

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\MenuRequest;
+use App\Http\Requests\MenuUpdateRequest;
 use App\Models\Menu;
 use App\Models\Genre;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,7 @@ class MenuController extends Controller
         return view('menus.edit', ['menu' => $menu]);
     }
 
-    public function update(MenuRequest $request, Menu $menu)
+    public function update(MenuUpdateRequest $request, Menu $menu)
     {
         $user = $request->user();
 
