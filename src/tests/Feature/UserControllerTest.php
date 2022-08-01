@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
         $this->menu = Menu::factory()->create(['user_id' => $this->user->id, 'genre_id' => $this->genre->id]);
     }
 
-    public function testMypage()
+    public function testMypageAccess()
     {
         // ログイン状態
         $response = $this->actingAs($this->user);
