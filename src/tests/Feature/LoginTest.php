@@ -11,29 +11,40 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
     public function testLogin()
     {
-        $user = User::factory()->create();
-
         $response = $this->get(route('login'));
         $response->assertStatus(200)->assertViewIs('auth.login');
 
         // ログインする
-        $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'password']);
+        $response = $this->post(route('login'), [
+            'email' => $this->user->email,
+            'password' => 'password'
+        ]);
+        // リダイレクト
         $response->assertStatus(302)->assertRedirect('/');
         // ユーザーがログイン認証されているか
-        $this->assertAuthenticatedAs($user);
+        $this->assertAuthenticatedAs($this->user);
     }
 
     public function testLoginNg()
     {
-        $user = User::factory()->create();
-
         $response = $this->get(route('login'));
         $response->assertStatus(200)->assertViewIs('auth.login');
 
         // パスワードを間違いログインする
-        $response = $this->post(route('login'), ['email' => $user->email, 'password' => 'passwordng']);
+        $response = $this->post(route('login'), [
+            'email' => $this->user->email,
+            'password' => 'ngpassword'
+        ]);
+        // リダイレクト
         $response->assertStatus(302)->assertRedirect('/login');
         // ユーザーが認証されていないか
         $this->assertGuest();
@@ -41,13 +52,16 @@ class LoginTest extends TestCase
 
     public function testLogout()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get('/');
+        // ログイン状態
+        $response = $this->actingAs($this->user);
+        // トップページへアクセス
+        $response = $this->get('/');
         $response->assertStatus(200)->assertViewIs('home');
-        // ログアウトする
+
+        // ログアウト処理
         $this->post('logout');
         $response->assertStatus(200);
+
         // ログアウト後、トップページにいること
         $response = $this->get('/')->assertStatus(200);
         // ユーザーが認証されていないこと
