@@ -6,7 +6,7 @@
 @include('nav')
 <div class="container text-center">
     <div class="card mt-3 mx-auto" style="width: 500px;">
-        <img src="{{ asset('storage/noImage.jpeg')}}" class="card-img-top" alt="...">
+        <img src="{{ asset('storage/noImage.jpeg') }}" class="card-img-top" alt="...">
         <div class="card-body">
             <h3 class="card-title">{{ $menu->name ?? '今日の献立は...' }}</h3>
             <form method="POST" action="{{ route('show') }}">

@@ -11,9 +11,15 @@
 
             <h2 class="card-title text-center mt-2">献立編集</h2>
 
+            @if ($menu->menu_image)
+            <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="...">
+            @else
+            <img src="{{ asset('storage/noImage.jpeg') }}" class="card-img-top" alt="...">
+            @endif
+
             @include('error_card_list')
 
-            <form method="POST" action="{{ route('menus.update', ['menu' => $menu] ) }}">
+            <form method="POST" action="{{ route('menus.update', ['menu' => $menu] ) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
 
@@ -25,6 +31,11 @@
                 <div class="form-group">
                     <label for="genre_name">ジャンル名</label>
                     <input type="text" class="form-control" id="genre_name" name="genre_name" required value="{{ $menu->genre->name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="menu_image">画像（変更する場合のみ）</label>
+                    <input type="file" class="form-control" id="menu_image" name="menu_image">
                 </div>
 
                 <button type="submit" class="btn btn-block btn-primary mt-4">更新する</button>

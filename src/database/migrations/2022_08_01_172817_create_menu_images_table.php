@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserGenreTable extends Migration
+class CreateMenuImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateUserGenreTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_genre', function (Blueprint $table) {
+        Schema::create('menu_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('genre_id')->constrained('genres')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateUserGenreTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_genre');
+        Schema::dropIfExists('menu_images');
     }
 }
