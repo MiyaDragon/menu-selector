@@ -9,7 +9,11 @@
     <div class="card mt-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-2">
-                <img src="" alt="...">
+                @if ($menu->menu_image)
+                <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="...">
+                @else
+                <img src="{{ asset('storage/noImage.jpeg') }}" class="card-img-top" alt="...">
+                @endif
             </div>
             <div class="col-md-8">
                 <div class="card-body">

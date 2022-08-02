@@ -32,6 +32,7 @@ class MenuRequest extends FormRequest
                 'max:30'
             ],
             'genre_name' => ['required', 'max:20'],
+            'menu_image' => ['file', 'image', 'mimes:jpeg,png'],
         ];
     }
 

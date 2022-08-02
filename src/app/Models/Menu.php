@@ -19,4 +19,9 @@ class Menu extends Model
     {
         return $this->belongsTo(Genre::class);
     }
+
+    public function menu_image(): BelongsTo
+    {
+        return $this->belongsTo(MenuImage::class);
+    }
 }
