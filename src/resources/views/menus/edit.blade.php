@@ -14,7 +14,7 @@
             @if ($menu->menu_image)
             <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="...">
             @else
-            <img src="{{ asset('storage/noImage.jpeg') }}" class="card-img-top" alt="...">
+            <img src="{{ asset('images/noImage.jpeg') }}" class="card-img-top" alt="...">
             @endif
 
             @include('error_card_list')
