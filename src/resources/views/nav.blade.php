@@ -8,10 +8,10 @@
         <ul class="nav">
             @guest
             <li class="nav-item">
-                <a class="btn btn-outline-warning nav-link link-dark px-2 me-2" href="{{ route('register') }}">ユーザー登録</a>
+                <a class="btn btn-warning nav-link text-white px-2 me-2" href="{{ route('register') }}">ユーザー登録</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-warning nav-link link-dark px-2" href="{{ route('login') }}">ログイン</a>
+                <a class="btn btn-outline-warning nav-link link-dark px-2" href="{{ route('login') }}">ログイン</a>
             </li>
             @endguest
 

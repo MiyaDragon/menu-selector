@@ -12,7 +12,7 @@
         <img src="{{ asset('images/noImage.jpeg') }}" class="card-img-top" alt="食品の画像">
         @endisset
         <div class="card-body">
-            <h3 class="card-title pb-2 skyblue">{{ $menu->name ?? '今日の献立は...' }}</h3>
+            <h3 class="card-title pb-2">{{ $menu->name ?? '今日の献立は...' }}</h3>
             <form method="POST" action="{{ route('show') }}">
                 @csrf
                 <div class="card-text row">
