@@ -3,41 +3,52 @@
 @section('title', 'ユーザー登録')
 
 @section('content')
-<div class="container" style="max-width: 540px">
-    <h1 class="text-center">献立セレクター</h1>
-    <div class="card mt-3">
+@include('nav')
+<div class="container" style="max-width: 500px">
+    <h1 class="h3 mt-4 text-center fw-bolder">献立セレクター</h1>
+    <div class="card mt-3 mx-auto">
         <div class="card-body">
-
-            <h2 class="card-title text-center mt-2">ユーザー登録</h2>
-
+            <h2 class="h3 card-title my-4 text-center">新規登録</h2>
             @include('error_card_list')
-
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <div class="form-group">
-                    <label for="name">ユーザー名</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
+                    <label for="name">ユーザーネーム（登録後に変更可能）</label>
+                    <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}" placeholder="例：太郎（50文字以内）">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}">
+                    <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}" placeholder="例：example@example.com">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label for="password">パスワード</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="例：8文字以上の半角英数">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label for="password_confirmation">パスワード（確認）</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary mt-4">ユーザー登録</button>
-
+                <div class="d-grid gap-2 my-4">
+                    <button type="submit" class="btn btn-warning text-white btn-lg">登録する</button>
+                </div>
             </form>
+            <hr>
+            <div class="d-grid gap-2 my-4">
+                <a class="btn btn-danger text-white btn-lg" href="/">
+                    <i class="fab fa-google"></i>
+                    <sapn>Googleで登録</sapn>
+                </a>
+            </div>
+            <hr>
+            <div class="d-grid gap-2 my-4">
+                <p class="text-center mb-0">アカウントをお持ちの方</p>
+                <a class="btn btn-outline-warning btn-lg" href="{{ route('login') }}">ログイン</a>
+            </div>
         </div>
     </div>
 </div>
