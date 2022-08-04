@@ -10,6 +10,7 @@ use App\Models\Genre;
 use App\Models\MenuImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class MenuController extends Controller
 {

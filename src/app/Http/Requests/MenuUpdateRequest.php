@@ -3,8 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
+use App\Rules\MenuName;
 
 class MenuUpdateRequest extends FormRequest
 {
@@ -28,7 +27,7 @@ class MenuUpdateRequest extends FormRequest
         return [
             'menu_name' => [
                 'required',
-                Rule::unique('menus', 'name')->ignore(Auth::user()->id, 'user_id'),
+                new MenuName($this->menu),
                 'max:30'
             ],
             'genre_name' => ['required', 'max:20'],
@@ -39,7 +38,6 @@ class MenuUpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'menu_name' => '献立名',
             'genre_name' => 'ジャンル名',
         ];
     }
