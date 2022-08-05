@@ -5,32 +5,41 @@
 @section('content')
 @include('nav')
 <div class="container" style="max-width: 500px">
-    <h1 class="h3 mt-4 text-center fw-bolder">献立セレクター</h1>
+    <h1 class="h3 mt-4 text-center fw-bolder">ユーザー登録</h1>
     <div class="card mt-3 mx-auto">
-        <div class="card-body">
-            <h2 class="h3 card-title my-4 text-center">新規登録</h2>
-            @include('error_card_list')
+        <div class="card-body mt-3 mx-4">
+
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <div class="form-group">
-                    <label for="name">ユーザーネーム（登録後に変更可能）</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}" placeholder="例：太郎（50文字以内）">
+                    <label for="name">ユーザーネーム</label>
+                    <sapn class="text-danger small">必須</sapn>
+                    <p class="text-muted small my-1">50文字以内</p>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id=" name" name="name" required value="{{ old('name') }}" placeholder="献立セレクター">
+                    @include('error_input_under', ['name' => 'name'])
                 </div>
 
-                <div class="form-group mt-2">
+                <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}" placeholder="例：example@example.com">
+                    <sapn class="text-danger small">必須</sapn>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
+                    @include('error_input_under', ['name' => 'email'])
                 </div>
 
-                <div class="form-group mt-2">
+                <div class="form-group mt-3">
                     <label for="password">パスワード</label>
-                    <input type="password" class="form-control" id="password" name="password" required placeholder="例：8文字以上の半角英数">
+                    <sapn class="text-danger small">必須</sapn>
+                    <p class="text-muted small my-1">8文字以上の半角英数</p>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                    @include('error_input_under', ['name' => 'password'])
                 </div>
 
-                <div class="form-group mt-2">
-                    <label for="password_confirmation">パスワード（確認）</label>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                <div class="form-group mt-3">
+                    <label for="password_confirmation">パスワード(確認)</label>
+                    <sapn class="text-danger small">必須</sapn>
+                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required>
+                    @include('error_input_under', ['name' => 'password_confirmation'])
                 </div>
 
                 <div class="d-grid gap-2 my-4">
@@ -39,15 +48,14 @@
             </form>
             <hr>
             <div class="d-grid gap-2 my-4">
-                <a class="btn btn-danger text-white btn-lg" href="/">
+                <a class="btn btn-outline-dark btn-lg" href="/">
                     <i class="fab fa-google"></i>
                     <sapn>Googleで登録</sapn>
                 </a>
             </div>
             <hr>
-            <div class="d-grid gap-2 my-4">
-                <p class="text-center mb-0">アカウントをお持ちの方</p>
-                <a class="btn btn-outline-warning btn-lg" href="{{ route('login') }}">ログイン</a>
+            <div class="my-3 text-center">
+                <a class="text-warning" href="{{ route('login') }}">ログインはこちら</a>
             </div>
         </div>
     </div>
