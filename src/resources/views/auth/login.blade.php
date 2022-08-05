@@ -4,14 +4,12 @@
 
 @section('content')
 @include('nav')
-<div class="container" style="max-width: 400px">
-    <h1 class="h3 mt-4 text-center fw-bolder">ログイン</h1>
-    <div class="card mt-3 mx-auto">
-        <div class="card-body">
+<div class="container" style="max-width: 450px">
+    <h1 class="h3 my-4 text-center fw-bolder">ログイン</h1>
+    <div class="card mx-auto">
+        <div class="card-body mx-4 my-3">
 
-            @include('error_card_list')
-
-            <div class="d-grid gap-2 my-4">
+            <div class="d-grid gap-2">
                 <a class="btn btn-outline-dark btn-lg" href="/">
                     <i class="fab fa-google"></i>
                     <sapn>Googleでログイン</sapn>
@@ -33,13 +31,19 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
 
-                <div class="mt-2">
+                <div class="my-2">
                     <a class="text-dark" href="/">パスワードを忘れた方</a>
                 </div>
 
+                @if($errors->has('email'))
+                <div class="text-danger">
+                    {{ $errors->first('email') }}
+                </div>
+                @endif
+
                 <input type="hidden" id="remember" name="remember" value="on">
 
-                <div class="d-grid gap-2 my-4">
+                <div class="d-grid gap-2 my-3">
                     <button type="submit" class="btn btn-warning text-white btn-lg">ログイン</button>
                 </div>
             </form>
