@@ -22,14 +22,14 @@ class UserControllerTest extends TestCase
         $this->menu = Menu::factory()->create(['user_id' => $this->user->id, 'genre_id' => $this->genre->id]);
     }
 
-    public function testMypageAccess()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // マイページへアクセス
-        $response = $this->get(route('users.show'));
-        $response->assertStatus(200)->assertViewIs('users.show');
-    }
+    // public function testMypageAccess()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // マイページへアクセス
+    //     $response = $this->get(route('users.show'));
+    //     $response->assertStatus(200)->assertViewIs('users.show');
+    // }
 
     public function testUserUpdate()
     {
@@ -51,7 +51,7 @@ class UserControllerTest extends TestCase
         $response = $this->put($update_url, $update_data);
         $response->assertSessionHasNoErrors();
         // リダイレクト
-        $response->assertStatus(302)->assertRedirect('users/mypage');
+        $response->assertStatus(302)->assertRedirect('users/edit');
 
         // データの存在確認
         $this->assertDatabaseHas('users', ['name' => $update_data['name']]);

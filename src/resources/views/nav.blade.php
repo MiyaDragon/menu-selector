@@ -16,9 +16,20 @@
             @endguest
 
             @auth
-            <li class="nav-item">
-                <a class="btn btn-outline-warning nav-link link-dark px-2 me-2" href="{{ route('users.show') }}">マイページ</a>
+            <li class="nav-item dropdown">
+                <button class="btn btn-outline-warning nav-link link-dark px-2 me-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    マイページ
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{ route('menus.create') }}">献立登録</a></li>
+                    <li><a class="dropdown-item" href="{{ route('menus.index') }}">献立編集</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('users.edit') }}">アカウント設定</a></li>
+                </ul>
             </li>
+
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

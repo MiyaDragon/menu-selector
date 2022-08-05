@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function show()
-    {
-        return view('users.show');
-    }
+    // public function show()
+    // {
+    //     return view('users.show');
+    // }
 
     public function edit()
     {
@@ -31,6 +31,6 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-        return redirect()->route('users.show');
+        return redirect()->route('users.edit');
     }
 }
