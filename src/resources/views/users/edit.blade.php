@@ -4,41 +4,43 @@
 
 @section('content')
 @include('nav')
-<div class="container" style="max-width: 540px">
-    <h1 class="text-center mt-2">献立セレクター</h1>
-    <div class="card mt-3">
-        <div class="card-body">
+<div class="container" style="max-width: 500px">
+    <h1 class="h3 mt-4 text-center fw-bolder">ユーザー編集</h1>
+    <div class="card mt-3 mx-auto">
+        <div class="card-body mt-3 mx-4">
 
-            <h2 class="card-title text-center mt-2">ユーザー情報変更</h2>
-
-            @include('error_card_list')
-
-            <form method="POST" action="{{ route('users.update') }}">
-                @method('PUT')
+            <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <div class="form-group">
-                    <label for="name">ユーザー名</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="{{ $user->name }}">
+                    <label for="name">ユーザーネーム</label>
+                    <p class="text-muted small my-1">50文字以内</p>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id=" name" name="name" required value="{{ $user->name }}">
+                    @include('error_input_under', ['name' => 'name'])
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control" id="email" name="email" required value="{{ $user->email }}">
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required required value="{{ $user->email }}">
+                    @include('error_input_under', ['name' => 'email'])
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="password">パスワード</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <p class="text-muted small my-1">8文字以上の半角英数</p>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                    @include('error_input_under', ['name' => 'password'])
                 </div>
 
-                <div class="form-group">
-                    <label for="password_confirmation">パスワード（確認）</label>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                <div class="form-group mt-3">
+                    <label for="password_confirmation">パスワード(確認)</label>
+                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required>
+                    @include('error_input_under', ['name' => 'password_confirmation'])
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary mt-4">変更</button>
-
+                <div class="d-grid gap-2 my-4">
+                    <button type="submit" class="btn btn-warning text-white btn-lg">変更する</button>
+                </div>
             </form>
         </div>
     </div>
