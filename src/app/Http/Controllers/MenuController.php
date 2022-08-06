@@ -10,7 +10,8 @@ use App\Models\Genre;
 use App\Models\MenuImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
+use Illuminate\Http\File;
 
 class MenuController extends Controller
 {
@@ -39,9 +40,15 @@ class MenuController extends Controller
         };
 
         if (!empty($request->menu_image)) {
-            $path = Storage::disk('s3')->putFile('/images', $request->file('menu_image'));
+            $file = $request->file('menu_image');
+
+            $tempPath = $this->makeTempPath();
+
+            Image::make($file)->fit(310, 230)->save($tempPath);
+
+            $filePath = Storage::disk('s3')->putFile('test', new File($tempPath));
             $menu_image->user_id = $user->id;
-            $menu_image->path = $path;
+            $menu_image->path = $filePath;
             $menu_image->save();
             $menu->menu_image_id = $menu_image->id;
         };
@@ -52,6 +59,13 @@ class MenuController extends Controller
         $menu->save();
 
         return redirect()->route('menus.create');
+    }
+
+    private function makeTempPath(): string
+    {
+        $tmp_fp = tmpfile();
+        $meta   = stream_get_meta_data($tmp_fp);
+        return $meta["uri"];
     }
 
     public function edit(Menu $menu)
