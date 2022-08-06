@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label for="menu_image">画像（変更する場合のみ）</label>
-                    <input type="file" class="form-control" id="menu_image" name="menu_image">
+                    <input type="file" accept="image/jpeg, image/png" class="form-control" id="menu_image" name="menu_image">
                 </div>
 
                 <button type="submit" class="btn btn-block btn-primary mt-4">更新する</button>
