@@ -9,8 +9,9 @@
     <div class="card mt-3 mx-auto">
         <div class="card-body mt-3 mx-4">
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('users.update') }}">
                 @csrf
+                @method('PUT')
 
                 <div class="form-group">
                     <label for="name">ユーザーネーム</label>
@@ -34,8 +35,7 @@
 
                 <div class="form-group mt-3">
                     <label for="password_confirmation">パスワード(確認)</label>
-                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required>
-                    @include('error_input_under', ['name' => 'password_confirmation'])
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
                 <div class="d-grid gap-2 my-4">

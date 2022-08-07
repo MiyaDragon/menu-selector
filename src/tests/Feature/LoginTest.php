@@ -34,16 +34,17 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($this->user);
     }
 
-    public function testLoginNg()
+    public function testLoginFailed()
     {
         $response = $this->get(route('login'));
         $response->assertStatus(200)->assertViewIs('auth.login');
-
         // パスワードを間違いログインする
         $response = $this->post(route('login'), [
             'email' => $this->user->email,
-            'password' => 'ngpassword'
+            'password' => 'pass'
         ]);
+        // 求めるエラーメッセージ
+        $response->assertSessionHasErrorsIn("ログイン情報が登録されていません。");
         // リダイレクト
         $response->assertStatus(302)->assertRedirect('/login');
         // ユーザーが認証されていないか

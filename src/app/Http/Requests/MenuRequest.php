@@ -41,6 +41,7 @@ class MenuRequest extends FormRequest
         return [
             'menu_name' => '献立名',
             'genre_name' => 'ジャンル名',
+            'menu_image' => '画像',
         ];
     }
 }
