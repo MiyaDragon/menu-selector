@@ -42,7 +42,39 @@
                     <button type="submit" class="btn btn-warning text-white btn-lg">変更する</button>
                 </div>
             </form>
+
+            <hr>
+
+            <div class="mt-2">
+                <a class="text-dark" type="button" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $user->id }}">退会する</a>
+            </div>
+
+            <!-- modal -->
+            <div id="modal-delete-{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bolder">本当に退会しますか？</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="{{ route('users.destroy', ['user' => $user]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <div class="modal-body">
+                                一度退会するとデータは全て削除され復旧できません。
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                                <button type="submit" class="btn btn-danger">退会する</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- modal -->
+
         </div>
+
     </div>
 </div>
 @endsection
