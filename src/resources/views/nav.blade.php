@@ -1,4 +1,4 @@
-<nav class="py-2 bg-light border-bottom">
+<nav class="py-2 bg-light border-bottom sticky-top">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             <li class="nav-item">
