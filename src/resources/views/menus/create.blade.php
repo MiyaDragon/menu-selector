@@ -15,6 +15,7 @@
                 <div class="form-group">
                     <label for="menu_name">献立名</label>
                     <span class="text-danger small">必須</span>
+                    <p class="text-muted small my-1">30文字以内</p>
                     <input type="text" class="form-control @error('menu_name') is-invalid @enderror" id="menu_name" name="menu_name" required value="{{ old('menu_name') }}">
                     @include('error_input_under', ['name' => 'menu_name'])
                 </div>
@@ -22,6 +23,7 @@
                 <div class="form-group mt-3">
                     <label for="genre_name">ジャンル名</label>
                     <span class="text-danger small">必須</span>
+                    <p class="text-muted small my-1">20文字以内</p>
                     <input type="text" class="form-control @error('genre_name') is-invalid @enderror" id="genre_name" name="genre_name" required value="{{ old('genre_name') }}">
                     @include('error_input_under', ['name' => 'genre_name'])
                 </div>

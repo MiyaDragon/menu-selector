@@ -38,8 +38,7 @@
                 <div class="form-group mt-3">
                     <label for="password_confirmation">パスワード(確認)</label>
                     <sapn class="text-danger small">必須</sapn>
-                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" required>
-                    @include('error_input_under', ['name' => 'password_confirmation'])
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
                 <div class="d-grid gap-2 my-4">
