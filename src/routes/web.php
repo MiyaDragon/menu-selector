@@ -34,5 +34,6 @@ Route::prefix('users')->name('users.')->group(function () {
         Route::get('/mypage', [UserController::class, 'show'])->name('show');
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('/update', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });

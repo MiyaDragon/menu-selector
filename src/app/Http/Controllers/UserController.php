@@ -33,4 +33,13 @@ class UserController extends Controller
 
         return redirect()->route('users.edit');
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        Auth::logout();
+
+        return redirect(route('login'));
+    }
 }
