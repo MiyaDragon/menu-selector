@@ -20,18 +20,12 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/', [HomeController::class, 'show'])->name('show');
 
-Auth::routes();
+Auth::routes(['confirm'  => false]);
 
 Route::resource('/menus', MenuController::class)->except(['show'])->middleware('auth');
-Route::prefix('menus')->name('menus.')->group(function () {
-    Route::middleware('auth')->group(function () {
-        // Route::get('/delete', [MenuController::class, 'delete'])->name('delete');
-    });
-});
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/mypage', [UserController::class, 'show'])->name('show');
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('/update', [UserController::class, 'update'])->name('update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
