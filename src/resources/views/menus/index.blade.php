@@ -56,5 +56,6 @@
         <!-- modal -->
         @endforeach
     </div>
+    {{ $menus->links('vendor.pagination.menus-pagination') }}
 </div>
 @endsection
