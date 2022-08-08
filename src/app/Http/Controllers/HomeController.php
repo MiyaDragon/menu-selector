@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
 use App\Models\Menu;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    /**
+     * ホーム画面表示
+     */
     public function index()
     {
-        if (Auth::user()) {
+        if (Auth::check()) {
             $genres = Auth::user()->genres;
         } else {
             $genres = Genre::all()->unique('name');
@@ -20,49 +23,47 @@ class HomeController extends Controller
         return view('home', ['genres' => $genres]);
     }
 
+    /**
+     * ホーム画面表示（メニュー表示あり）
+     */
     public function show(Request $request)
     {
-        if ($request->genre_id === 'all') {
-            $data = $this->getDataFromGenreAll();
+        if (Auth::check()) {
+            $data = $this->getDataFromAuthUser($request->genre_id);
         } else {
-            $genre_id = $request->genre_id;
-            $data = $this->getDataFromGenreDecided($genre_id);
+            $data = $this->getDataFromGuestUser($request->genre_id);
         }
 
         return view('home', $data);
     }
 
-    private function getDataFromGenreAll()
+    private function getDataFromAuthUser(int|string $genre_id): array
     {
-        if (Auth::user()) {
+        if ($genre_id === 'all') {
             $menu = Auth::user()->menus->random();
-            $genres = Auth::user()->genres;
         } else {
-            $menu = Menu::all()->unique('name')->random();
-            $genres = Genre::all()->unique('name');
+            $menu = Auth::user()->menus->where('genre_id', $genre_id)->random();
         }
 
         $data = [
             'menu' => $menu,
-            'genres' => $genres,
+            'genres' => Auth::user()->genres,
         ];
 
         return $data;
     }
 
-    private function getDataFromGenreDecided(int $genre_id)
+    private function getDataFromGuestUser(int|string $genre_id): array
     {
-        if (Auth::user()) {
-            $menu = Auth::user()->menus->where('genre_id', $genre_id)->random();
-            $genres = Auth::user()->genres;
+        if ($genre_id === 'all') {
+            $menu = Menu::all()->unique('name')->random();
         } else {
             $menu = Menu::where('genre_id', $genre_id)->get()->unique('name')->random();
-            $genres = Genre::all()->unique('name');
         }
 
         $data = [
             'menu' => $menu,
-            'genres' => $genres,
+            'genres' => Genre::all()->unique('name'),
         ];
 
         return $data;
