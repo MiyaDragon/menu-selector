@@ -1,46 +1,35 @@
-@extends('layouts.app')
+@extends('app')
+
+@section('title', 'パスワード再設定')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+@include('nav')
+<div class="container" style="max-width: 450px">
+    <h1 class="h3 my-4 text-center fw-bolder">パスワード再設定</h1>
+    <div class="card mx-auto">
+        <div class="card-body mx-4 my-3">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            @if (session('status'))
+            <div class="card-text alert alert-success">
+                {{ session('status') }}
             </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+
+                <div class="form-group">
+                    <label class="fw-bolder mb-2" for="email">メールアドレス</label>
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
+                    @include('error_input_under', ['name' => 'email'])
+                </div>
+
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="{{ route('login') }}" type="button" class="btn btn-outline-dark mx-2">キャンセル</a>
+                    <button type="submit" class="btn btn-warning text-white">送信</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
