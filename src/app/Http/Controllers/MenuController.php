@@ -22,8 +22,7 @@ class MenuController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        $menus = $user->menus;
+        $menus = Menu::where('user_id', Auth::user()->id)->paginate(6);
         return view('menus.index', ['menus' => $menus]);
     }
 
