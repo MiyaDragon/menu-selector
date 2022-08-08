@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="my-2">
-                    <a class="text-dark" href="/">パスワードを忘れた方</a>
+                    <a class="text-dark" href="{{ route('password.request') }}">パスワードを忘れた方</a>
                 </div>
 
                 @if($errors->has('email'))
