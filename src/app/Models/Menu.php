@@ -11,8 +11,10 @@ class Menu extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'user_id',
         'genre_id',
+        'menu_image_id',
+        'name',
     ];
 
     public function genre(): BelongsTo
