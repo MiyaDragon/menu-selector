@@ -2,33 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * ユーザー情報更新画面表示
+     */
     public function edit()
     {
-        $user = Auth::user();
-        return view('users.edit', ['user' => $user]);
+        return view('users.edit', ['user' => Auth::user()]);
     }
 
+    /**
+     * ユーザー情報を更新する
+     */
     public function update(UserRequest $request)
     {
-        $user_id = Auth::user()->id;
-        $user = User::where('id', $user_id)
-            ->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+        $user = User::where('id', Auth::id())
+                    ->update([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                    ]);
 
         return redirect()->route('users.edit');
     }
-
+    /**
+     * ユーザー情報を論理削除する
+     */
     public function destroy(User $user)
     {
         $user->delete();
