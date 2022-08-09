@@ -10,6 +10,11 @@ class MenuImage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'path',
+    ];
+
     // S3キー(ファイルパス)から、期限付きURLを取得する
     public function GetPresignedURL()
     {

@@ -10,8 +10,8 @@ use App\Models\Genre;
 use App\Models\MenuImage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 use Illuminate\Http\File;
+use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
 {
@@ -20,44 +20,40 @@ class MenuController extends Controller
         $this->authorizeResource(Menu::class, 'menu');
     }
 
+    /**
+     * メニュー一覧表示
+     */
     public function index()
     {
-        $menus = Menu::where('user_id', Auth::user()->id)->paginate(6);
+        $menus = Menu::where('user_id', Auth::id())->paginate(6);
+
         return view('menus.index', ['menus' => $menus]);
     }
 
+    /**
+     * メニュー作成画面表示
+     */
     public function create()
     {
         return view('menus.create');
     }
 
+    /**
+     * メニューを登録する
+     */
     public function store(MenuRequest $request, Menu $menu, MenuImage $menu_image)
     {
-        $user = $request->user();
-
-        $genre = $user->genres->where('name', $request->genre_name)->first();
+        $genre = $this->getGenre($request->genre_name);
         if (empty($genre)) {
-            $genre = new Genre();
-            $genre->name = $request->genre_name;
-            $genre->user_id = $user->id;
-            $genre->save();
+            $genre = $this->createGenre($request->genre_name);
         };
 
-        if (!empty($request->menu_image)) {
-            $file = $request->file('menu_image');
-
-            $tempPath = $this->makeTempPath();
-
-            Image::make($file)->fit(310, 230)->save($tempPath);
-
-            $filePath = Storage::disk('s3')->putFile('test', new File($tempPath));
-            $menu_image->user_id = $user->id;
-            $menu_image->path = $filePath;
-            $menu_image->save();
+        if (isset($request->menu_image)) {
+            $menu_image = $this->createMenuImage($menu_image, $request->file('menu_image'));
             $menu->menu_image_id = $menu_image->id;
         };
 
-        $menu->user_id = $user->id;
+        $menu->user_id = Auth::id();
         $menu->genre_id = $genre->id;
         $menu->name = $request->menu_name;
         $menu->save();
@@ -65,34 +61,80 @@ class MenuController extends Controller
         return redirect()->route('menus.create');
     }
 
-    private function makeTempPath(): string
+    /**
+     * ジャンルが既に登録されている場合、取得する
+     */
+    private function getGenre(string $genre_name): Genre|null
+    {
+        return Auth::user()->genres->where('name', $genre_name)->first();
+    }
+
+    /**
+     * ジャンルを登録する
+     */
+    private function createGenre(string $genre_name): Genre
+    {
+        $genre = Genre::create([
+            'name' => $genre_name,
+            'user_id' => Auth::id(),
+        ]);
+
+        return $genre;
+    }
+
+    /**
+     * メニュー画像を登録する
+     */
+    private function createMenuImage(MenuImage $menu_image, string $file): MenuImage
+    {
+        $tempPath = $this->createTempPath();
+
+        Image::make($file)->fit(310, 230)->save($tempPath);
+
+        $filePath = Storage::disk('s3')->putFile('images', new File($tempPath));
+
+        $menu_image->user_id = Auth::id();
+        $menu_image->path = $filePath;
+        $menu_image->save();
+
+        return $menu_image;
+    }
+
+    /**
+     * 画像を一時保管ファイルを作成し、パスを返す
+     */
+    private function createTempPath(): string
     {
         $tmp_fp = tmpfile();
         $meta   = stream_get_meta_data($tmp_fp);
+
         return $meta["uri"];
     }
 
+    /**
+     * メニュー編集画面表示
+     */
     public function edit(Menu $menu)
     {
         return view('menus.edit', ['menu' => $menu]);
     }
 
+    /**
+     * メニューを更新する
+     */
     public function update(MenuUpdateRequest $request, Menu $menu)
     {
-        $user = $request->user();
+        $genre = $this->getGenre($request->genre_name);
+        if (empty($genre)) {
+            $genre = $this->createGenre($request->genre_name);
+        };
 
-        $genre = $user->genres->where('name', $request->genre_name)->first() ?? new Genre();
-        $genre->name = $request->genre_name;
-        $genre->user_id = $user->id;
-        $genre->save();
-
-        if (!empty($request->menu_image)) {
+        if (isset($request->menu_image)) {
             Storage::disk('s3')->delete($request->file('menu_image'));
-            $menu_image = MenuImage::find($menu->menu_image->id);
-            $path = Storage::disk('s3')->putFile('/images', $request->file('menu_image'));
-            $menu_image->path = $path;
-            $menu_image->save();
-        }
+            $menu_image = $this->findMenuImage($menu, new MenuImage());
+            $menu_image = $this->createMenuImage($menu_image, $request->file('menu_image'));
+            $menu->menu_image_id = $menu_image->id;
+        };
 
         $menu->name = $request->menu_name;
         $menu->genre_id = $genre->id;
@@ -101,11 +143,26 @@ class MenuController extends Controller
         return redirect()->route('menus.index');
     }
 
+    /**
+     * メニュー画像が登録されていれば、該当するインスタンスを返す
+     */
+    private function findMenuImage(Menu $menu, MenuImage $menu_image): MenuImage
+    {
+        if (isset($menu->menu_image)) {
+            $menu_image = MenuImage::find($menu->menu_image->id);
+        }
+
+        return $menu_image;
+    }
+
+    /**
+     * メニューを削除する
+     */
     public function destroy(Menu $menu)
     {
         $menu->delete();
 
-        if (Menu::where('genre_id', $menu->genre_id)->count() < 1) {
+        if ($this->isOtherGenreNotExists($menu)) {
             $menu->genre->delete();
         }
 
@@ -115,5 +172,13 @@ class MenuController extends Controller
         }
 
         return redirect()->route('menus.index');
+    }
+
+    /**
+     * 他のメニューで、同じジャンルを指定しているのがあるか
+     */
+    private function isOtherGenreNotExists(Menu $menu): bool
+    {
+        return Menu::where('genre_id', $menu->genre_id)->doesntExist();
     }
 }
