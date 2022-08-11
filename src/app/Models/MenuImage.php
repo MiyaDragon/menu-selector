@@ -16,10 +16,11 @@ class MenuImage extends Model
     ];
 
     // S3キー(ファイルパス)から、期限付きURLを取得する
-    public function GetPresignedURL()
+    public function getPresignedUrl()
     {
         $s3 = Storage::disk('s3');
         $client = $s3->getDriver()->getAdapter()->getClient();
+        // dd($client);
         $command = $client->getCommand('GetObject', [
             'Bucket' => env('AWS_BUCKET'),
             'Key' => $this->path,

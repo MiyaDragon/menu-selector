@@ -51,21 +51,21 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testLogout()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // トップページへアクセス
-        $response = $this->get('/');
-        $response->assertStatus(200)->assertViewIs('home');
+    // public function testLogout()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // トップページへアクセス
+    //     $response = $this->get('/');
+    //     $response->assertStatus(200)->assertViewIs('home');
 
-        // ログアウト処理
-        $this->post('logout');
-        $response->assertStatus(200);
+    //     // ログアウト処理
+    //     $this->post('logout');
+    //     $response->assertStatus(200);
 
-        // ログアウト後、トップページにいること
-        $response = $this->get('/')->assertStatus(200);
-        // ユーザーが認証されていないこと
-        $this->assertGuest();
-    }
+    //     // ログアウト後、トップページにいること
+    //     $response = $this->get('/')->assertStatus(200);
+    //     // ユーザーが認証されていないこと
+    //     $this->assertGuest();
+    // }
 }

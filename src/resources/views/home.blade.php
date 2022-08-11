@@ -6,16 +6,20 @@
 @include('nav')
 <div class="container text-center">
     <div class="card mt-3 mx-auto" style="max-width: 500px">
-        @isset($menu)
-        <img src="{{ is_null($menu->menu_image) ? asset('images/noImage.jpeg') : $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="食品の画像">
+        @isset($menu_image_url)
+        <img src="{{ $menu_image_url ?? asset('images/noImage.jpeg') }}" class="card-img-top" alt="食品の画像" style="max-width: 500px; max-height: 370px;">
         @else
         <img src="{{ asset('images/noImage.jpeg') }}" class="card-img-top" alt="食品の画像">
         @endisset
         <div class="card-body">
-            <h3 class="card-title pb-2">{{ $menu->name ?? '今日の献立は...' }}</h3>
+            @isset($menu)
+            <a href="{{ $menu->recipe_url }}" class="card-title pb-2 h3 text-dark">{{ $menu->name }}</a>
+            @else
+            <h3 class=" card-title">今日の献立は...</h3>
+            @endisset
             <form method="POST" action="{{ route('show') }}">
                 @csrf
-                <div class="card-text row">
+                <div class="card-text row pt-2">
                     <div class="col-2">
                         <label for="genre" class="col-form-label">ジャンル</label>
                     </div>

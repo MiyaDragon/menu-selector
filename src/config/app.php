@@ -123,6 +123,11 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    /**
+     * 楽天API applicationId
+     */
+    'rakuten_id' => env('RAKUTEN_APPLICATION_ID', false),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
