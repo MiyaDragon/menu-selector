@@ -10,7 +10,7 @@
         <div class="card-body mx-4 my-3">
 
             <div class="d-grid gap-2">
-                <a class="btn btn-outline-dark btn-lg" href="/">
+                <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-outline-dark btn-lg">
                     <i class="fab fa-google"></i>
                     <sapn>Googleでログイン</sapn>
                 </a>

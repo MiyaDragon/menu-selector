@@ -47,7 +47,7 @@
             </form>
             <hr>
             <div class="d-grid gap-2 my-4">
-                <a class="btn btn-outline-dark btn-lg" href="/">
+                <a class="btn btn-outline-dark btn-lg" href="{{ route('login.{provider}', ['provider' => 'google']) }}">
                     <i class="fab fa-google"></i>
                     <sapn>Googleで登録</sapn>
                 </a>
