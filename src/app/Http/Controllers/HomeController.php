@@ -149,8 +149,8 @@ class HomeController extends Controller
 
         $data = [
             'menu' => $menu,
-            'genres' => $this->getRakutenGenre(),
-            'menu_url' => $menu->menu_image,
+            'genres' => $this->getRakutenGenres(),
+            'menu_image_url' => $menu->menu_image,
         ];
 
         return $data;
