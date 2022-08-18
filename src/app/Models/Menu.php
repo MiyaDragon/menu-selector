@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Menu extends Model
 {
@@ -25,5 +26,10 @@ class Menu extends Model
     public function menu_image(): BelongsTo
     {
         return $this->belongsTo(MenuImage::class);
+    }
+
+    public function ate_menus(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'ate_menus')->withTimestamps();
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
 
 class MenuController extends Controller
 {
@@ -21,11 +22,22 @@ class MenuController extends Controller
     }
 
     /**
+     * 献立カレンダー表示
+     */
+    public function calendar()
+    {
+        $menus = Auth::user()->ate_menus;
+
+        return view('menus.calendar', ['menus' => $menus]);
+    }
+
+    /**
      * メニュー一覧表示
      */
     public function index()
     {
-        $menus = Menu::where('user_id', Auth::id())->paginate(6);
+        $menus = Menu::where('user_id', Auth::id())
+            ->whereNotNull('genre_id')->paginate(6);
 
         return view('menus.index', ['menus' => $menus]);
     }
@@ -180,5 +192,39 @@ class MenuController extends Controller
     private function isOtherGenreNotExists(Menu $menu): bool
     {
         return Menu::where('genre_id', $menu->genre_id)->doesntExist();
+    }
+
+    /**
+     * 中間テーブルに食べた献立を登録
+     */
+    public function ateMenuCreate(Request $request)
+    {
+        // 同じ日付で登録されているか
+        $date = Auth::user()->ate_menus;
+        foreach ($date as $value) {
+            if ($value->pivot->where('created_at', new Carbon(today()))->exists()) {
+                return false;
+                // return redirect()->route('home');
+            }
+        }
+
+        $menu_id = $request->menu;
+
+        if (is_array($request->menu)) {
+            $menu_image = new MenuImage();
+            $menu_image->user_id = Auth::id();
+            $menu_image->path = $request->menu['menu_image'];
+            $menu_image->save();
+
+            $menu = new Menu();
+            $menu->user_id = Auth::id();
+            $menu->menu_image_id = $menu_image->id;
+            $menu->name = $request->menu['name'];
+            $menu->save();
+
+            $menu_id = $menu->id;
+        }
+
+        Menu::find($menu_id)->ate_menus()->attach(Auth::id());
     }
 }

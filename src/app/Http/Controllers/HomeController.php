@@ -15,6 +15,7 @@ class HomeController extends Controller
         $this->client = new RakutenRws_Client();
         $this->client->setApplicationId(config('app.rakuten_id'));
     }
+
     /**
      * ホーム画面表示
      */
@@ -77,15 +78,22 @@ class HomeController extends Controller
     }
 
     /**
-     * ホーム画面表示（メニュー表示あり）
+     * ホーム画面表示（メニュー表示）
      */
     public function show(Request $request)
     {
-        if (Auth::check()) {
-            $data = $this->getDataFromAuthUser($request->genre_id);
+        if ($request->has('create')) {
+            $menu_ctl = new MenuController;
+            $menu_ctl->ateMenuCreate($request);
+            return redirect()->route('menus.calendar');
         } else {
-            $data = $this->getDataFromGuestUser($request->genre_id);
+            if (Auth::check()) {
+                $data = $this->getDataFromAuthUser($request->genre_id);
+            } else {
+                $data = $this->getDataFromGuestUser($request->genre_id);
+            }
         }
+
         return view('home', $data);
     }
 
@@ -115,7 +123,6 @@ class HomeController extends Controller
     /**
      * 登録済みの献立と楽天レシピAPIから取得した献立を結合
      */
-    // private function getMixMenus()
     private function getMixMenus(): Collection
     {
         $menus = Auth::user()->menus;

@@ -21,6 +21,7 @@
                     マイページ
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{ route('menus.calendar') }}">献立カレンダー</a></li>
                     <li><a class="dropdown-item" href="{{ route('menus.create') }}">献立登録</a></li>
                     <li><a class="dropdown-item" href="{{ route('menus.index') }}">献立編集</a></li>
                     <li>

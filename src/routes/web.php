@@ -25,6 +25,11 @@ Route::post('/', [HomeController::class, 'show'])->name('show');
 Auth::routes(['confirm'  => false]);
 
 Route::resource('/menus', MenuController::class)->except(['show'])->middleware('auth');
+Route::prefix('menus')->name('menus.')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('/calendar', [MenuController::class, 'calendar'])->name('calendar');
+    });
+});
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::middleware('auth')->group(function () {
