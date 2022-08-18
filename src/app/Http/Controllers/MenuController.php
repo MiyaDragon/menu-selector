@@ -70,7 +70,7 @@ class MenuController extends Controller
         $menu->name = $request->menu_name;
         $menu->save();
 
-        return redirect()->route('menus.create');
+        return redirect()->route('menus.create')->with('flash_message', '登録が完了しました');
     }
 
     /**
