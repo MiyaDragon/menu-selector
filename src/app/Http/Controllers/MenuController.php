@@ -152,7 +152,7 @@ class MenuController extends Controller
         $menu->genre_id = $genre->id;
         $menu->save();
 
-        return redirect()->route('menus.index');
+        return redirect()->route('menus.index')->with('flash_message', '更新しました');
     }
 
     /**
