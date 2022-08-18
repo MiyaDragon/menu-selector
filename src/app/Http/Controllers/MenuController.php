@@ -183,7 +183,7 @@ class MenuController extends Controller
             $menu->menu_image->delete();
         }
 
-        return redirect()->route('menus.index');
+        return redirect()->route('menus.index')->with('flash_message', '削除しました');
     }
 
     /**
