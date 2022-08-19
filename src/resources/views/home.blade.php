@@ -34,15 +34,15 @@
                     </div>
                 </div>
                 @guest
-                <button type="submit" class="btn btn-warning mt-4 px-5">スタート</button>
+                <button type="submit" class="btn btn-orange mt-4 px-5">スタート</button>
                 @endguest
 
                 @auth
                 @isset($menu)
-                <button type="submit" name="create" class="btn btn-warning mt-4 px-5">決定</button>
-                <button type="submit" class="btn btn-warning mt-4 px-5">もう一度</button>
+                <button type="submit" name="create" class="btn btn-orange text-white mt-4 px-5">決定</button>
+                <button type="submit" class="btn btn-outline-orange bg-white link-orange mt-4 px-5">もう一度</button>
                 @else
-                <button type="submit" class="btn btn-warning mt-4 px-5">スタート</button>
+                <button type="submit" class="btn btn-orange text-white mt-4 px-5">スタート</button>
                 @endisset
                 @endauth
             </form>

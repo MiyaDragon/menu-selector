@@ -21,8 +21,8 @@
                             <h4>{{ $menu->name }}</h4>
                         </div>
                         <div class="btn-group">
-                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-secondary">編集</a>
-                            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $menu->id }}">削除</a>
+                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-orange bg-white text-dark">編集</a>
+                            <a class="btn btn-sm btn-orange text-white" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $menu->id }}">削除</a>
                         </div>
                     </div>
                     <div class="genre">

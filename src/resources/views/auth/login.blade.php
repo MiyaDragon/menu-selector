@@ -44,14 +44,14 @@
                 <input type="hidden" id="remember" name="remember" value="on">
 
                 <div class="d-grid gap-2 my-3">
-                    <button type="submit" class="btn btn-warning text-white btn-lg">ログイン</button>
+                    <button type="submit" class="btn btn-orange text-white btn-lg">ログイン</button>
                 </div>
             </form>
 
             <hr>
 
             <div class="mt-2 text-center">
-                <a class="text-dark" href="{{ route('register') }}">ユーザー登録はこちら</a>
+                <a class="text-orange" href="{{ route('register') }}">ユーザー登録はこちら</a>
             </div>
 
         </div>
