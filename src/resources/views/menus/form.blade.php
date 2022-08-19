@@ -27,5 +27,5 @@
 </div>
 
 <div class="d-grid gap-2 my-4">
-    <button type="submit" class="btn btn-warning text-white btn-lg">{{ $btn_name }}</button>
+    <button type="submit" class="btn btn-orange text-white btn-lg">{{ $btn_name }}</button>
 </div>

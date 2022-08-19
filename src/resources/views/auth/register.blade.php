@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="d-grid gap-2 my-4">
-                    <button type="submit" class="btn btn-warning text-white btn-lg">登録する</button>
+                    <button type="submit" class="btn btn-orange text-white btn-lg">登録する</button>
                 </div>
             </form>
             <hr>
@@ -54,7 +54,7 @@
             </div>
             <hr>
             <div class="my-3 text-center">
-                <a class="text-warning" href="{{ route('login') }}">ログインはこちら</a>
+                <a class="text-orange" href="{{ route('login') }}">ログインはこちら</a>
             </div>
         </div>
     </div>
