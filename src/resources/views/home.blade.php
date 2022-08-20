@@ -13,9 +13,12 @@
         @endisset
         <div class="card-body">
             @isset($menu)
-            <a href="{{ $menu->recipe_url }}" class="card-title pb-2 h3 text-dark">{{ $menu->name }}</a>
+            <h3 class=" card-title pb-2 fw-bolder">{{ $menu->name }}</h3>
             @else
             <h3 class=" card-title">今日の献立は...</h3>
+            @endisset
+            @isset($menu->recipe_url)
+            <button type="button" class="btn btn-outline-orange mb-3" onclick="location.href= '{{ $menu->recipe_url }}'">レシピを見る（外部サイト）</button>
             @endisset
             <form method="POST" action="{{ route('show', ['menu' => $menu ?? null]) }}">
                 @csrf
@@ -39,8 +42,10 @@
 
                 @auth
                 @isset($menu)
-                <button type="submit" name="create" class="btn btn-orange text-white mt-4 px-5">決定</button>
-                <button type="submit" class="btn btn-outline-orange bg-white link-orange mt-4 px-5">もう一度</button>
+                <div class="d-grid gap-3 col-6 mx-auto my-2">
+                    <button type="submit" class="btn btn-orange text-white mt-4" name="create">決定</button>
+                    <button type="submit" class="btn btn-outline-orange bg-white link-orange">もう一度</button>
+                </div>
                 @else
                 <button type="submit" class="btn btn-orange text-white mt-4 px-5">スタート</button>
                 @endisset
