@@ -10,7 +10,7 @@
         <div class="card-body mx-4 my-3">
 
             @if (session('status'))
-            <div class="card-text alert alert-success">
+            <div class="card-text alert alert-orange">
                 {{ session('status') }}
             </div>
             @endif
@@ -25,8 +25,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="{{ route('login') }}" type="button" class="btn btn-outline-dark mx-2">キャンセル</a>
-                    <button type="submit" class="btn btn-warning text-white">送信</button>
+                    <a type="button" onClick="history.back()" class="btn btn-outline-dark mx-2">戻る</a>
+                    <button type="submit" class="btn btn-orange text-white">送信</button>
                 </div>
             </form>
 
