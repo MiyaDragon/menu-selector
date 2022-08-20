@@ -34,7 +34,12 @@ Route::prefix('menus')->name('menus.')->group(function () {
 Route::prefix('users')->name('users.')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
-        Route::put('/update', [UserController::class, 'update'])->name('update');
+        Route::get('/edit/name', [UserController::class, 'editName'])->name('editName');
+        Route::put('/update/name', [UserController::class, 'updateName'])->name('updateName');
+        Route::get('/edit/email', [UserController::class, 'editEmail'])->name('editEmail');
+        Route::put('/update/email', [UserController::class, 'updateEmail'])->name('updateEmail');
+        Route::get('/edit/password', [UserController::class, 'editPassword'])->name('editPassword');
+        Route::put('/update/password', [UserController::class, 'updatePassword'])->name('updatePassword');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });

@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="mt-4 text-end">
-                    <button type="submit" class="btn btn-warning text-white">送信</button>
+                    <button type="submit" class="btn btn-orange text-white">送信</button>
                 </div>
             </form>
 
