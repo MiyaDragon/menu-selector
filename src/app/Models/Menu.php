@@ -32,4 +32,17 @@ class Menu extends Model
     {
         return $this->belongsToMany(User::class, 'ate_menus')->withTimestamps();
     }
+
+    public function getLimitNameAttribute(): string
+    {
+        $name = $this->name;
+        $limit = 7;
+
+        if (mb_strlen($name) > $limit) {
+            $name = mb_substr($name, 0, $limit);
+            return $name . "...";
+        } else {
+            return $name;
+        }
+    }
 }
