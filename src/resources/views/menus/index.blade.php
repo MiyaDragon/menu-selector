@@ -18,7 +18,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="menu">
                             <label>献立名</label>
-                            <h4>{{ $menu->name }}</h4>
+                            <h4>{{ $menu->limit_name }}</h4>
                         </div>
                         <div class="btn-group">
                             <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-orange bg-white text-dark">編集</a>
