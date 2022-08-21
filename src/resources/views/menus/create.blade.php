@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', '献立登録')
+@section('title', '献立登録 - 献立セレクター')
 
 @section('content')
 @include('nav')

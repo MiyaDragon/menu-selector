@@ -1,11 +1,11 @@
 @extends('app')
 
-@section('title', 'パスワード変更')
+@section('title', 'パスワード変更 - 献立セレクター')
 
 @section('content')
 @include('nav')
 <div class="container" style="max-width: 450px">
-    <h1 class="h3 mt-4 text-center fw-bolder">ユーザー編集</h1>
+    <h1 class="h3 mt-4 text-center fw-bolder">パスワード変更</h1>
     <div class="card mt-3 mx-auto">
         <div class="card-body mt-3 mx-4">
 

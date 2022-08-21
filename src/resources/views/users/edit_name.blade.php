@@ -1,11 +1,11 @@
 @extends('app')
 
-@section('title', 'ユーザー名変更')
+@section('title', 'ユーザー名変更 - 献立セレクター')
 
 @section('content')
 @include('nav')
 <div class="container" style="max-width: 450px">
-    <h1 class="h3 mt-4 text-center fw-bolder">ユーザー編集</h1>
+    <h1 class="h3 mt-4 text-center fw-bolder">ユーザー名変更</h1>
     <div class="card mt-3 mx-auto">
         <div class="card-body mt-3 mx-4">
 
@@ -14,7 +14,7 @@
                 @method('PUT')
 
                 <div class="form-group">
-                    <label for="name">ユーザーネーム</label>
+                    <label for="name">ユーザー名</label>
                     <p class="text-muted small my-1">50文字以内</p>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required value="{{ $user->name }}">
                     @include('error_input_under', ['name' => 'name'])
