@@ -22,17 +22,14 @@
                 @csrf
 
                 <div class="form-group">
-                    <label class="fw-bolder mb-2" for="email">メールアドレス</label>
+                    <label class="fw-bolder mb-1" for="email">メールアドレス</label>
                     <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
                 </div>
 
                 <div class="form-group mt-4">
-                    <label class="fw-bolder mb-2" for="password">パスワード</label>
+                    <label class="fw-bolder mb-1" for="password">パスワード</label>
                     <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-
-                <div class="my-2">
-                    <a class="text-dark" href="{{ route('password.request') }}">パスワードを忘れた方</a>
+                    <a class="text-dark small" href="{{ route('password.request') }}">パスワードを忘れた方</a>
                 </div>
 
                 @if($errors->has('email'))
