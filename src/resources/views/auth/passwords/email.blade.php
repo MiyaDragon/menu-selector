@@ -10,7 +10,7 @@
         <div class="card-body mx-4 my-3">
 
             @if (session('status'))
-            <div class="card-text alert alert-orange">
+            <div class="card-text alert alert-success">
                 {{ session('status') }}
             </div>
             @endif
@@ -18,15 +18,15 @@
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 
-                <div class="form-group">
-                    <label class="fw-bolder mb-2" for="email">メールアドレス</label>
+                <div class="form-group mb-4">
+                    <label class="fw-bolder mb-1" for="email">メールアドレス</label>
                     <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
                     @include('error_input_under', ['name' => 'email'])
                 </div>
 
-                <div class="d-flex justify-content-end mt-3">
-                    <a type="button" onClick="history.back()" class="btn btn-outline-dark mx-2">戻る</a>
+                <div class="d-grid gap-2 mb-2">
                     <button type="submit" class="btn btn-orange text-white">送信</button>
+                    <a type="button" onClick="history.back()" class="btn btn-outline-dark">戻る</a>
                 </div>
             </form>
 
