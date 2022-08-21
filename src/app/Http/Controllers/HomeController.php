@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RakutenRws_Client;
 use App\Consts\ApiConst;
+use App\Models\Menu;
 
 class HomeController extends Controller
 {
@@ -136,8 +137,12 @@ class HomeController extends Controller
 
     private function getMenuImageUrl(Object $menu): string
     {
-        if (is_object($menu->menu_image)) {
-            return $menu->menu_image->getPresignedUrl();
+        if ($menu instanceof (new Menu())) {
+            if (isset($menu->genre_id)) {
+                return $menu->menu_image->getPresignedUrl();
+            } else {
+                return $menu->menu_image->path;
+            }
         }
 
         return $menu->menu_image;
