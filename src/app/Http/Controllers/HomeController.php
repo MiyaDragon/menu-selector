@@ -116,6 +116,7 @@ class HomeController extends Controller
             'menu' => $menu,
             'genres' => $this->getMixGenres(),
             'menu_image_url' => is_null($menu->menu_image) ? null : $this->getMenuImageUrl($menu),
+            'recipe_url' => $this->getRecipeUrl($menu),
         ];
 
         return $data;
@@ -148,6 +149,19 @@ class HomeController extends Controller
         return $menu->menu_image;
     }
 
+    private function getRecipeUrl(Object $menu): string | null
+    {
+        if ($menu instanceof (new Menu())) {
+            if (isset($menu->recipe_url_id)) {
+                return $menu->recipe_url->url;
+            } else {
+                return null;
+            }
+        }
+
+        return $menu->recipe_url;
+    }
+
     private function getDataFromGuestUser(int|string $genre_id): array
     {
         if ($genre_id === 'all') {
@@ -163,6 +177,7 @@ class HomeController extends Controller
             'menu' => $menu,
             'genres' => $this->getRakutenGenres(),
             'menu_image_url' => $menu->menu_image,
+            'recipe_url' => $menu->recipe_url,
         ];
 
         return $data;

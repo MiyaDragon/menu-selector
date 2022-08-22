@@ -28,6 +28,11 @@ class Menu extends Model
         return $this->belongsTo(MenuImage::class);
     }
 
+    public function recipe_url(): BelongsTo
+    {
+        return $this->belongsTo(RecipeUrl::class);
+    }
+
     public function ate_menus(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'ate_menus')->withTimestamps();
