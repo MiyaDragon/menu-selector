@@ -25,11 +25,41 @@ class MenuController extends Controller
     /**
      * 献立カレンダー表示
      */
-    public function calendar()
+    public function calendar(Request $request, Carbon $dt)
     {
+        $year = $request->ym ? mb_substr($request->ym, 0, 4) : $dt->year;
+        $month = $request->ym ? mb_substr($request->ym, 5) : $dt->month;
+
+        $current_date = new Carbon("{$year}-{$month}-1");
+
+        $dates = $this->getCalendarDates($year, $month);
+
         $menus = Auth::user()->ate_menus;
 
-        return view('menus.calendar', ['menus' => $menus]);
+        return view('menus.calendar', ['menus' => $menus, 'dates' => $dates, 'current_dates' => $current_date]);
+    }
+
+    /**
+     * カレンダーに表示する日数を取得
+     */
+    private function getCalendarDates(int $year, int $month): array
+    {
+        $date = new Carbon("{$year}-{$month}-01");
+
+        $addDay = ($date->copy()->endOfMonth()->isSunday() || $date->dayOfWeek == 6) ? 7 : 0;
+
+        $date->subDay($date->dayOfWeek);
+
+        $count = 31 + $addDay + $date->dayOfWeek;
+        $count = ceil($count / 7) * 7;
+
+        $dates = [];
+
+        for ($i = 0; $i < $count; $i++, $date->addDay()) {
+            $dates[] = $date->copy();
+        }
+
+        return $dates;
     }
 
     /**
