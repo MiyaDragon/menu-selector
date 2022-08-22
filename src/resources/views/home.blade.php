@@ -17,8 +17,8 @@
             @else
             <h3 class=" card-title">今日の献立は...</h3>
             @endisset
-            @isset($menu->recipe_url)
-            <button type="button" class="btn btn-outline-orange mb-3" onclick="location.href= '{{ $menu->recipe_url }}'">レシピを見る（外部サイト）</button>
+            @isset($recipe_url)
+            <button type="button" class="btn btn-outline-orange mb-3" onclick="location.href= '{{ $recipe_url }}'">レシピを見る（外部サイト）</button>
             @endisset
             <form method="POST" action="{{ route('show', ['menu' => $menu ?? null]) }}">
                 @csrf

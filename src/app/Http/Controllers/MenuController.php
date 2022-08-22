@@ -8,6 +8,7 @@ use App\Http\Requests\MenuUpdateRequest;
 use App\Models\Menu;
 use App\Models\Genre;
 use App\Models\MenuImage;
+use App\Models\RecipeUrl;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
@@ -199,6 +200,7 @@ class MenuController extends Controller
      */
     public function ateMenuCreate(Request $request)
     {
+        // dd($request);
         // 同じ日付で登録されているか
         $date = Auth::user()->ate_menus;
         foreach ($date as $value) {
@@ -216,9 +218,15 @@ class MenuController extends Controller
             $menu_image->path = $request->menu['menu_image'];
             $menu_image->save();
 
+            $recipe_url = new RecipeUrl();
+            $recipe_url->user_id = Auth::id();
+            $recipe_url->url = $request->menu['recipe_url'];
+            $recipe_url->save();
+
             $menu = new Menu();
             $menu->user_id = Auth::id();
             $menu->menu_image_id = $menu_image->id;
+            $menu->recipe_url_id = $recipe_url->id;
             $menu->name = $request->menu['name'];
             $menu->save();
 
