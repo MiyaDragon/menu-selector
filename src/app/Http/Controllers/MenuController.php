@@ -230,13 +230,13 @@ class MenuController extends Controller
      */
     public function ateMenuCreate(Request $request)
     {
-        // dd($request);
         // 同じ日付で登録されているか
-        $date = Auth::user()->ate_menus;
-        foreach ($date as $value) {
-            if ($value->pivot->where('created_at', new Carbon(today()))->exists()) {
-                return false;
-                // return redirect()->route('home');
+        $ate_menus = Auth::user()->ate_menus;
+
+        foreach ($ate_menus as $menu) {
+            if ($menu->pivot->created_at == new Carbon(today())) {
+                return redirect()->route('menus.calendar')
+                        ->with('error_message', '本日の献立は既に登録されています');
             }
         }
 
