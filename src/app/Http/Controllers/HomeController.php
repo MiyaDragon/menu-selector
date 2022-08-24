@@ -2,225 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use RakutenRws_Client;
-use App\Consts\ApiConst;
-use App\Models\Menu;
+use App\Home\UseCase\ShowHomePageUseCase;
+use App\Home\UseCase\ShowSelectedMenuPageUseCase;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->client = new RakutenRws_Client();
-        $this->client->setApplicationId(config('app.rakuten_id'));
-    }
-
     /**
      * ホーム画面表示
+     * @param ShowHomePageUseCase $useCase
      */
-    public function index()
+    public function index(ShowHomePageUseCase $useCase)
     {
-        if (Auth::check()) {
-            $genres = $this->getMixGenres();
-        } else {
-            $genres = $this->getRakutenGenres();
-        }
-
-        return view('home', ['genres' => $genres]);
+        return view('home', $useCase->handle());
     }
 
     /**
-     * 登録済みのジャンルと楽天レシピAPIから取得したジャンルを結合
+     * ホーム画面に選択したメニュー表示
+     * @param ShowSelectedMenuPageUseCase $useCase
      */
-    private function getMixGenres(): Collection
+    public function show(Request $request, ShowSelectedMenuPageUseCase $useCase)
     {
-        $genres = Auth::user()->genres;
-        $rakuten_genres = $this->getRakutenGenres();
-        foreach ($rakuten_genres as $genre) {
-            $genres = $genres->add($genre);
-        }
-
-        return $genres;
-    }
-
-    /**
-     * 楽天レシピAPIから献立のジャンルを取得
-     */
-    private function getRakutenGenres()
-    {
-        $apiCategory = ApiConst::GENRES_API_CATEGORY;
-        $param = ['categoryType' => ApiConst::GENRES_CATEGORY_TYPE];
-
-        $response = $this->getResponse($apiCategory, $param);
-
-        if ($response->isOk()) {
-            $genres = [];
-            foreach ($response['result'][ApiConst::GENRES_CATEGORY_TYPE] as $rakutenItem) {
-                $genres[] = (object) array(
-                    'id' => ApiConst::RAKUTEN_PREFIX . $rakutenItem['categoryId'],
-                    'name' => $rakutenItem['categoryName'],
-                );
-            }
-        } else {
-            return 'Error:' . $response->getMessage();
-        }
-
-        return $genres;
-    }
-
-    /**
-     * 楽天レシピAPIからレスポンスを取得
-     */
-    private function getResponse(string $apiCategory, array $param)
-    {
-        return $this->client->execute($apiCategory, $param);
-    }
-
-    /**
-     * ホーム画面表示（メニュー表示）
-     */
-    public function show(Request $request)
-    {
-        if ($request->has('create')) {
-            $menu_ctl = new MenuController;
-            $menu_ctl->ateMenuCreate($request);
-            return redirect()->route('menus.calendar');
-        } else {
-            if (Auth::check()) {
-                $data = $this->getDataFromAuthUser($request->genre_id);
-            } else {
-                $data = $this->getDataFromGuestUser($request->genre_id);
-            }
-        }
-
-        return view('home', $data);
-    }
-
-    private function getDataFromAuthUser(int|string $genre_id): array
-    {
-        if ($genre_id === 'all') {
-            $menus = $this->getMixMenus();
-            $menu = $menus->random();
-        } else {
-            if (substr($genre_id, 0, 1) === ApiConst::RAKUTEN_PREFIX) {
-                $menus = $this->getRakutenMenus(ltrim($genre_id, ApiConst::RAKUTEN_PREFIX));
-                $menu = collect($menus)->random();
-            } else {
-                $menu = Auth::user()->menus->where('genre_id', $genre_id)->random();
-            }
-        }
-
-        $data = [
-            'menu' => $menu,
-            'genres' => $this->getMixGenres(),
-            'menu_image_url' => is_null($menu->menu_image) ? null : $this->getMenuImageUrl($menu),
-            'recipe_url' => $this->getRecipeUrl($menu),
-        ];
-
-        return $data;
-    }
-
-    /**
-     * 登録済みの献立と楽天レシピAPIから取得した献立を結合
-     */
-    private function getMixMenus(): Collection
-    {
-        $menus = Auth::user()->menus;
-        $rand_num = $this->mt_rand_except(ApiConst::RAND_MIN, ApiConst::RAND_MAX, ApiConst::EXCEPT_NUMS);
-        $rakuten_menus = $this->getRakutenMenus($rand_num);
-        foreach ($rakuten_menus as $menu) {
-            $menus = $menus->add($menu);
-        }
-        return $menus;
-    }
-
-    private function getMenuImageUrl(Object $menu): string
-    {
-        if ($menu instanceof (new Menu())) {
-            if (isset($menu->genre_id)) {
-                return $menu->menu_image->getPresignedUrl();
-            } else {
-                return $menu->menu_image->path;
-            }
-        }
-
-        return $menu->menu_image;
-    }
-
-    private function getRecipeUrl(Object $menu): string | null
-    {
-        if ($menu instanceof (new Menu())) {
-            if (isset($menu->recipe_url_id)) {
-                return $menu->recipe_url->url;
-            } else {
-                return null;
-            }
-        }
-
-        return $menu->recipe_url;
-    }
-
-    private function getDataFromGuestUser(int|string $genre_id): array
-    {
-        if ($genre_id === 'all') {
-            $rand_num = $this->mt_rand_except(ApiConst::RAND_MIN, ApiConst::RAND_MAX, ApiConst::EXCEPT_NUMS);
-            $menus = $this->getRakutenMenus($rand_num);
-        } else {
-            $menus = $this->getRakutenMenus($genre_id);
-        }
-
-        $menu = collect($menus)->random();
-
-        $data = [
-            'menu' => $menu,
-            'genres' => $this->getRakutenGenres(),
-            'menu_image_url' => $menu->menu_image,
-            'recipe_url' => $menu->recipe_url,
-        ];
-
-        return $data;
-    }
-
-    private function mt_rand_except(int $min, int $max, $except): int
-    {
-        if (gettype($except) == 'array') {
-            do {
-                $num = mt_rand($min, $max);
-            } while (in_array($num, $except));
-        } else {
-            do {
-                $num = mt_rand($min, $max);
-            } while ($num == $except);
-        }
-
-        return $num;
-    }
-
-    /**
-     * 楽天レシピAPIから献立名を取得
-     */
-    private function getRakutenMenus(int $genre_id)
-    {
-        $apiCategory = ApiConst::MENUS_API_CATEGORY;
-        $param = ['categoryId' => $genre_id];
-
-        $response = $this->getResponse($apiCategory, $param);
-
-        if ($response->isOk()) {
-            $menus = [];
-            foreach ($response['result'] as $rakutenItem) {
-                $menus[] = (object) array(
-                    'name' => $rakutenItem['recipeTitle'],
-                    'menu_image' => $rakutenItem['foodImageUrl'],
-                    'recipe_url' => $rakutenItem['recipeUrl'],
-                );
-            }
-        } else {
-            return 'Error:' . $response->getMessage();
-        }
-
-        return $menus;
+        return view('home', $useCase->handle($request->genre_id));
     }
 }

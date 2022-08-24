@@ -42,8 +42,7 @@
 
                 @auth
                 @isset($menu)
-                <div class="d-grid gap-3 col-6 mx-auto my-2">
-                    <button type="submit" class="btn btn-orange text-white mt-4" name="create">決定</button>
+                <div class="d-grid col-6 mx-auto mt-4">
                     <button type="submit" class="btn btn-outline-orange bg-white link-orange">もう一度</button>
                 </div>
                 @else
@@ -51,6 +50,15 @@
                 @endisset
                 @endauth
             </form>
+            @auth
+            @isset($menu)
+            <form action="{{ route('home') }}">
+                <div class="d-grid col-6 mx-auto">
+                    <button type="submit" class="btn btn-orange text-white mt-4" name="create">決定</button>
+                </div>
+            </form>
+            @endisset
+            @endauth
         </div>
     </div>
 </div>

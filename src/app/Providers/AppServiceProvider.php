@@ -14,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(\App\Lib\RecipeCategories\RecipeCategoriesInterface::class, \App\Lib\RecipeCategories\RecipeCategories::class);
+        $this->app->bind(\App\Lib\RecipeMenus\RecipeMenusInterface::class, \App\Lib\RecipeMenus\RecipeMenus::class);
     }
 
     /**
