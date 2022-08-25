@@ -6,11 +6,11 @@
 @include('nav')
 <div class="container">
     <div class="my-3 d-flex">
-        <a href="?ym={{ $current_dates->copy()->subMonth(1)->format('Y-n') }}" class="btn btn-light d-flex align-items-center justify-content-center">
+        <a href="?ym={{ $current_date->copy()->subMonth(1)->format('Y-n') }}" class="btn btn-light d-flex align-items-center justify-content-center">
             <i class="fas fa-caret-left fa-2x"></i>
         </a>
-        <h3 class="d-flex align-items-center mb-0">{{ $current_dates->format("Y年m月") }}</h3>
-        <a href="?ym={{ $current_dates->copy()->addMonth(1)->format('Y-n') }}" class="btn btn-light d-flex align-items-center justify-content-center">
+        <h3 class="d-flex align-items-center mb-0">{{ $current_date->format("Y年m月") }}</h3>
+        <a href="?ym={{ $current_date->copy()->addMonth(1)->format('Y-n') }}" class="btn btn-light d-flex align-items-center justify-content-center">
             <i class="fas fa-caret-right fa-2x"></i>
         </a>
     </div>
@@ -28,7 +28,7 @@
             @if ($date->dayOfWeek == 0)
             <tr>
                 @endif
-                <td @if($date->month != $current_dates->format("m")) class="bg-secondary" @endif style="height: 100px; width: 100px;">
+                <td @if($date->month != $current_date->format("m")) class="bg-secondary" @endif style="height: 100px; width: 100px;">
                     {{ $date->day }}
                     @foreach ($menus as $menu)
                     @if ($date == $menu->pivot->created_at)
