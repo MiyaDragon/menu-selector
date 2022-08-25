@@ -27,7 +27,8 @@ Auth::routes(['confirm'  => false]);
 Route::resource('/menus', MenuController::class)->except(['show'])->middleware('auth');
 Route::prefix('menus')->name('menus.')->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/calendar', [MenuController::class, 'calendar'])->name('calendar');
+        Route::get('/calendar', [MenuController::class, 'showMenuCalendar'])->name('calendar');
+        Route::post('/ateMenu/store', [MenuController::class, 'ateMenuStore'])->name('ateMenuStore');
     });
 });
 

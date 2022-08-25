@@ -20,7 +20,7 @@
             @isset($recipe_url)
             <button type="button" class="btn btn-outline-orange mb-3" onclick="location.href= '{{ $recipe_url }}'">レシピを見る（外部サイト）</button>
             @endisset
-            <form method="POST" action="{{ route('show', ['menu' => $menu ?? null]) }}">
+            <form method="POST" action="{{ route('show') }}">
                 @csrf
 
                 <div class="card-text row pt-2">
@@ -52,9 +52,11 @@
             </form>
             @auth
             @isset($menu)
-            <form action="{{ route('home') }}">
+            <form method="POST" action="{{ route('menus.ateMenuStore', ['menu' => $menu] ) }}">
+                @csrf
+
                 <div class="d-grid col-6 mx-auto">
-                    <button type="submit" class="btn btn-orange text-white mt-4" name="create">決定</button>
+                    <button type="submit" class="btn btn-orange text-white mt-4">決定</button>
                 </div>
             </form>
             @endisset
