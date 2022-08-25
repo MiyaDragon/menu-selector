@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserNameUpdateRequest;
+use App\Http\Requests\UserEmailUpdateRequest;
+use App\Http\Requests\UserPasswordUpdateRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
+use App\User\UseCase\UpdateUserNameUseCase;
+use App\User\UseCase\UpdateUserEmailUseCase;
+use App\User\UseCase\UpdateUserPasswordUseCase;
+use App\User\UseCase\DeleteUserUseCase;
 
 class UserController extends Controller
 {
@@ -29,13 +34,9 @@ class UserController extends Controller
     /**
      * ユーザー名を更新する
      */
-    public function updateName(Request $request)
+    public function updateName(UserNameUpdateRequest $request, UpdateUserNameUseCase $useCase)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:50'],
-        ]);
-
-        User::where('id', Auth::id())->update(['name' => $request->name]);
+        $useCase->handle($request->name);
 
         return redirect()->route('users.edit')->with('flash_message', 'ユーザー名を変更しました。');
     }
@@ -50,13 +51,9 @@ class UserController extends Controller
     /**
      * メールアドレスを更新する
      */
-    public function updateEmail(Request $request)
+    public function updateEmail(UserEmailUpdateRequest $request, UpdateUserEmailUseCase $useCase)
     {
-        $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)]
-        ]);
-
-        User::where('id', Auth::id())->update(['email' => $request->email]);
+        $useCase->handle($request->email);
 
         return redirect()->route('users.edit')->with('flash_message', 'メールアドレスを変更しました。');
     }
@@ -71,14 +68,9 @@ class UserController extends Controller
     /**
      * パスワードを更新する
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(UserPasswordUpdateRequest $request, UpdateUserPasswordUseCase $useCase)
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-            'new_password' => ['required', 'confirmed', 'min:8', 'string'],
-        ]);
-
-        User::where('id', Auth::id())->update(['password' => Hash::make($request->password)]);
+        $useCase->handle($request->password);
 
         return redirect()->route('users.edit')->with('flash_message', 'パスワードを変更しました。');
     }
@@ -86,11 +78,9 @@ class UserController extends Controller
     /**
      * ユーザー情報を論理削除する
      */
-    public function destroy(User $user)
+    public function destroy(User $user, DeleteUserUseCase $useCase)
     {
-        $user->delete();
-
-        Auth::logout();
+        $useCase->handle($user);
 
         return redirect(route('login'));
     }
