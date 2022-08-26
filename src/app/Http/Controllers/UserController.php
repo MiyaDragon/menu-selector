@@ -33,6 +33,8 @@ class UserController extends Controller
 
     /**
      * ユーザー名を更新する
+     * @param UserNameUpdateRequest $request
+     * @param UpdateUserNameUseCase $useCase
      */
     public function updateName(UserNameUpdateRequest $request, UpdateUserNameUseCase $useCase)
     {
@@ -50,6 +52,8 @@ class UserController extends Controller
 
     /**
      * メールアドレスを更新する
+     * @param UserEmailUpdateRequest $request
+     * @param UpdateUserEmailUseCase $useCase
      */
     public function updateEmail(UserEmailUpdateRequest $request, UpdateUserEmailUseCase $useCase)
     {
@@ -67,6 +71,8 @@ class UserController extends Controller
 
     /**
      * パスワードを更新する
+     * @param UserPasswordUpdateRequest $request
+     * @param UpdateUserPasswordUseCase $useCase
      */
     public function updatePassword(UserPasswordUpdateRequest $request, UpdateUserPasswordUseCase $useCase)
     {
@@ -76,7 +82,9 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー情報を論理削除する
+     * ユーザー情報を削除する
+     * @param User $user
+     * @param DeleteUserUseCase $useCase
      */
     public function destroy(User $user, DeleteUserUseCase $useCase)
     {

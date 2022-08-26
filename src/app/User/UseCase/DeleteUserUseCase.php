@@ -8,7 +8,8 @@ use App\Models\User;
 final class DeleteUserUseCase
 {
     /**
-     *
+     * ユーザーを削除する
+     * @param User $user
      */
     public function handle(User $user)
     {
