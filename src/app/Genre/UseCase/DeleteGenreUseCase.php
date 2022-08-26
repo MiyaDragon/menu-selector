@@ -7,7 +7,8 @@ use App\Models\Menu;
 final class DeleteGenreUseCase
 {
     /**
-     * @return
+     * 他の献立にジャンルが指定されてなければ、削除する
+     * @param Menu $menu
      */
     public function handle(Menu $menu)
     {
@@ -17,7 +18,9 @@ final class DeleteGenreUseCase
     }
 
     /**
-     * 他のメニューで、同じジャンルを指定しているのがあるか
+     * 他の献立で、同じジャンルを指定しているのがあるか
+     * @param Menu $menu
+     * @return bool
      */
     private function isOtherGenreNotExists(Menu $menu): bool
     {

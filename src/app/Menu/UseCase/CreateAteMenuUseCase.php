@@ -12,6 +12,7 @@ final class CreateAteMenuUseCase
 {
     /**
      * 中間テーブルに食べた献立を登録
+     * @param int|array $menu
      */
     public function handle(int|array $menu)
     {

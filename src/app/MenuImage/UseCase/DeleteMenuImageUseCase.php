@@ -8,7 +8,8 @@ use App\Models\Menu;
 final class DeleteMenuImageUseCase
 {
     /**
-     *
+     * S3とDBから登録されている献立画像を削除する
+     * @param Menu $menu
      */
     public function handle(Menu $menu)
     {

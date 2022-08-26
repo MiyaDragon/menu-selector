@@ -14,6 +14,7 @@ final class CreateGenreUseCase
      * ・まだジャンルが登録されていない場合
      * ジャンルを登録し、登録したジャンルを返す
      *
+     * @param string $genre_name
      * @return Genre
      */
     public function handle(string $genre_name): Genre
