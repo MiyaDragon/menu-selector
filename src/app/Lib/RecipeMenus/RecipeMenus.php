@@ -2,6 +2,7 @@
 
 namespace App\Lib\RecipeMenus;
 
+use Illuminate\Support\Collection;
 use App\Consts\ApiConst;
 use RakutenRws_Client;
 
@@ -9,9 +10,10 @@ final class RecipeMenus implements RecipeMenusInterface
 {
     /**
      * 楽天レシピAPIから献立のジャンルを取得
-     * @return array
+     * @param int $genre_id
+     * @return Collection
      */
-    public function get(int $genre_id): array
+    public function get(int $genre_id): Collection
     {
         $apiCategory = ApiConst::MENUS_API_CATEGORY;
         $param = ['categoryId' => $genre_id];
@@ -23,16 +25,12 @@ final class RecipeMenus implements RecipeMenusInterface
         if ($response->isOk()) {
             $menus = [];
             foreach ($response['result'] as $rakutenItem) {
-                $menus[] = (object) array(
-                    'name' => $rakutenItem['recipeTitle'],
-                    'menu_image' => $rakutenItem['foodImageUrl'],
-                    'recipe_url' => $rakutenItem['recipeUrl'],
-                );
+                $menus[] = new GetRecipeMenusResponse($rakutenItem['recipeTitle'], $rakutenItem['foodImageUrl'], $rakutenItem['recipeUrl']);
             }
         } else {
             return 'Error:' . $response->getMessage();
         }
 
-        return $menus;
+        return collect($menus);
     }
 }

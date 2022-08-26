@@ -8,6 +8,7 @@ final class GetRecipeUrlUseCase
 {
     /**
      * 献立レシピURLを取得
+     * @param Object $menu
      * @return string|null
      */
     public function get(Object $menu): string | null

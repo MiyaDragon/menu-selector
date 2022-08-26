@@ -20,18 +20,19 @@ final class ShowSelectedMenuPageUseCase
 
     /**
      * ページ内に表示される内容
-     * ・ログイン前：
+     * ・ゲストユーザー：
      * 楽天レシピAPIから取得した献立
      * 楽天レシピAPIから取得したジャンル
      * 楽天レシピAPIから取得した献立画像
      * 楽天レシピAPIから取得したレシピURL
      *
-     * ・ログイン後：
+     * ・ログインユーザー：
      * 楽天レシピAPIから取得した献立＋自分で登録した献立
      * 楽天レシピAPIから取得したジャンル＋自分で登録したジャンル
      * 楽天レシピAPIから取得した献立画像 or 自分で登録した献立画像
      * 楽天レシピAPIから取得したレシピURL
      *
+     * @param int|string $genre_id
      * @return array
      */
     public function handle(int|string $genre_id): array
@@ -45,6 +46,11 @@ final class ShowSelectedMenuPageUseCase
         return $data;
     }
 
+    /**
+     * ログインユーザーの処理
+     * @param int|string $genre_id
+     * @return array
+     */
     private function getDataFromAuthUser(int|string $genre_id): array
     {
         if ($genre_id === 'all') {
@@ -55,14 +61,10 @@ final class ShowSelectedMenuPageUseCase
                 ApiConst::EXCEPT_NUMS
             );
             $rakuten_menus = $this->menus->get($rand_num);
-            foreach ($rakuten_menus as $menu) {
-                $menus = $menus->add($menu);
-            }
-            $menu = $menus->random();
+            $menu = $rakuten_menus->merge($menus)->random();
         } else {
             if (substr($genre_id, 0, 1) === ApiConst::RAKUTEN_PREFIX) {
-                $menus = $this->menus->get(ltrim($genre_id, ApiConst::RAKUTEN_PREFIX));
-                $menu = collect($menus)->random();
+                $menu = $this->menus->get(ltrim($genre_id, ApiConst::RAKUTEN_PREFIX))->random();
             } else {
                 $menu = Auth::user()->menus->where('genre_id', $genre_id)->random();
             }
@@ -78,17 +80,20 @@ final class ShowSelectedMenuPageUseCase
         return $data;
     }
 
+    /**
+     * ゲストユーザーの処理
+     * @param int|string $genre_id
+     * @return array
+     */
     private function getDataFromGuestUser(int|string $genre_id): array
     {
         if ($genre_id === 'all') {
             $rand_num = $this->mt_rand_except(ApiConst::RAND_MIN,
             ApiConst::RAND_MAX, ApiConst::EXCEPT_NUMS);
-            $rakuten_menus = $this->menus->get($rand_num);
+            $menu = $this->menus->get($rand_num)->random();
         } else {
-            $rakuten_menus = $this->menus->get($genre_id);
+            $menu = $this->menus->get($genre_id)->random();
         }
-
-        $menu = collect($rakuten_menus)->random();
 
         $data = [
             'menu' => $menu,
@@ -100,7 +105,14 @@ final class ShowSelectedMenuPageUseCase
         return $data;
     }
 
-    private function mt_rand_except(int $min, int $max, $except): int
+    /**
+     * ランダムな数字を生成
+     * @param int $min
+     * @param int $max
+     * @param array|int $except
+     * @return int
+     */
+    private function mt_rand_except(int $min, int $max, array|int $except): int
     {
         if (gettype($except) == 'array') {
             do {
@@ -114,5 +126,4 @@ final class ShowSelectedMenuPageUseCase
 
         return $num;
     }
-
 }
