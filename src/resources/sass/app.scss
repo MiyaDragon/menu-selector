@@ -4,16 +4,6 @@
 // Variables
 @import 'variables';
 
-th:nth-of-type(1),
-td:nth-of-type(1) {
-  color: red;
-}
-
-th:nth-of-type(7),
-td:nth-of-type(7) {
-  color: blue;
-}
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
@@ -25,6 +15,12 @@ td:nth-of-type(7) {
   -webkit-text-fill-color: transparent;
 }
 
-.dropdown-hover:hover > .dropdown-menu {
-  display: block;
+th:nth-of-type(1),
+td:nth-of-type(1) {
+  color: red;
+}
+
+th:nth-of-type(7),
+td:nth-of-type(7) {
+  color: blue;
 }

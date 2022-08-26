@@ -2,14 +2,16 @@
 
 namespace App\Lib\RecipeCategories;
 
+use App\Consts\ApiConst;
+
 final class GetRecipeCategoriesResponse
 {
-    public int $id;
+    public string $id;
     public string $name;
 
     public function __construct(int $categoryId, string $categoryName)
     {
-        $this->id = $categoryId;
+        $this->id = ApiConst::RAKUTEN_PREFIX . $categoryId;
         $this->name = $categoryName;
     }
 }

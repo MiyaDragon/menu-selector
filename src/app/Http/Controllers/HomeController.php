@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function show(Request $request, ShowSelectedMenuPageUseCase $useCase)
     {
-        return view('home', $useCase->handle($request->genre_id));
+        return view('show', $useCase->handle($request->genre_id));
     }
 }
