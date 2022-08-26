@@ -13,7 +13,14 @@ use App\Models\Menu;
 final class CreateMenuImageUseCase
 {
     /**
+     * ・新規で献立画像を登録する場合
+     * 送られてきたfileをS3とDBに登録する
      *
+     * ・献立画像を更新する場合
+     * 既にS3に登録されている画像を削除し、S3とDBに登録する
+     *
+     * @param UploadedFile $file
+     * @param Menu $menu
      */
     public function handle(UploadedFile $file, Menu $menu)
     {
@@ -42,6 +49,7 @@ final class CreateMenuImageUseCase
 
     /**
      * 画像を一時保管ファイルを作成し、パスを返す
+     * @return string
      */
     private function createTempPath(): string
     {

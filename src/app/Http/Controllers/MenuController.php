@@ -26,6 +26,8 @@ class MenuController extends Controller
 
     /**
      * 献立カレンダー表示
+     * @param Request $request
+     * @param ShowMenuCalendarPageUseCase $useCase
      */
     public function showMenuCalendar(Request $request, ShowMenuCalendarPageUseCase $useCase)
     {
@@ -33,7 +35,8 @@ class MenuController extends Controller
     }
 
     /**
-     * メニュー一覧表示
+     * 献立一覧表示
+     * @param ShowMenuListPageUseCase $useCase
      */
     public function index(ShowMenuListPageUseCase $useCase)
     {
@@ -41,7 +44,7 @@ class MenuController extends Controller
     }
 
     /**
-     * メニュー作成画面表示
+     * 献立作成画面表示
      */
     public function create()
     {
@@ -49,9 +52,13 @@ class MenuController extends Controller
     }
 
     /**
-     * メニューを登録する
+     * 献立を登録する
+     * @param MenuRequest $request
+     * @param CreateMenuUseCase $menuUseCase
+     * @param CreateGenreUseCase $genreUseCase
+     * @param CreateMenuImageUseCase $menuImageUseCase
      */
-    public function store(MenuRequest $request, CreateGenreUseCase $genreUseCase, CreateMenuImageUseCase $menuImageUseCase, CreateMenuUseCase $menuUseCase)
+    public function store(MenuRequest$request, CreateMenuUseCase $menuUseCase, CreateGenreUseCase $genreUseCase, CreateMenuImageUseCase $menuImageUseCase)
     {
         $genre = $genreUseCase->handle($request->genre_name);
 
@@ -65,7 +72,8 @@ class MenuController extends Controller
     }
 
     /**
-     * メニュー編集画面表示
+     * 献立編集画面表示
+     * @param Menu $menu
      */
     public function edit(Menu $menu)
     {
@@ -73,9 +81,14 @@ class MenuController extends Controller
     }
 
     /**
-     * メニューを更新する
+     * 献立を更新する
+     * @param MenuUpdateRequest $request
+     * @param Menu $menu
+     * @param UpdateMenuUseCase $menuUseCase
+     * @param CreateGenreUseCase $genreUseCase
+     * @param CreateMenuImageUseCase $menuImageUseCase
      */
-    public function update(MenuUpdateRequest $request, Menu $menu, CreateGenreUseCase $genreUseCase, CreateMenuImageUseCase $menuImageUseCase, UpdateMenuUseCase $menuUseCase)
+    public function update(MenuUpdateRequest $request, Menu $menu, UpdateMenuUseCase $menuUseCase, CreateGenreUseCase $genreUseCase, CreateMenuImageUseCase $menuImageUseCase)
     {
         $genre = $genreUseCase->handle($request->genre_name);
 
@@ -89,7 +102,11 @@ class MenuController extends Controller
     }
 
     /**
-     * メニューを削除する
+     * 献立を削除する
+     * @param Menu $menu
+     * @param DeleteMenuUseCase $menuUseCase
+     * @param DeleteGenreUseCase $genreUseCase
+     * @param DeleteMenuImageUseCase $menuImageUseCase
      */
     public function destroy(Menu $menu, DeleteMenuUseCase $menuUseCase, DeleteGenreUseCase $genreUseCase, DeleteMenuImageUseCase $menuImageUseCase)
     {
@@ -106,6 +123,8 @@ class MenuController extends Controller
 
     /**
      * 中間テーブルに食べた献立を登録
+     * @param Request $request
+     * @param CreateAteMenuUseCase $useCase
      */
     public function ateMenuStore(Request $request, CreateAteMenuUseCase $useCase)
     {

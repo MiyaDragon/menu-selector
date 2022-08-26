@@ -8,6 +8,8 @@ use App\Models\Menu;
 final class ShowMenuListPageUseCase
 {
     /**
+     * ページ内に表示される内容
+     * ・登録した献立の一覧
      * @return array
      */
     public function handle(): array

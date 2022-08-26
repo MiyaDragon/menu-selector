@@ -7,7 +7,13 @@ use App\Models\Menu;
 final class UpdateMenuUseCase
 {
     /**
-     *@return Menu
+     *
+     * 登録されている献立の内容を更新する
+     *
+     * @param Menu $menu
+     * @param int $genre_id
+     * @param string $menu_name
+     * @return Menu
      */
     public function handle(Menu $menu, int $genre_id, string $menu_name): Menu
     {

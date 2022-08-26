@@ -8,6 +8,10 @@ use Carbon\Carbon;
 final class ShowMenuCalendarPageUseCase
 {
     /**
+     * ページ内に表示される内容
+     * ・月毎のカレンダー
+     * ・食べた献立を登録していれば、カレンダー日に表示
+     * @param ?string $ym
      * @return array
      */
     public function handle(?string $ym): array
@@ -31,6 +35,9 @@ final class ShowMenuCalendarPageUseCase
 
     /**
      * カレンダーに表示する日数を取得
+     * @param int $yeary
+     * @param int $month
+     * @return array
      */
     private function getCalendarDates(int $year, int $month): array
     {
