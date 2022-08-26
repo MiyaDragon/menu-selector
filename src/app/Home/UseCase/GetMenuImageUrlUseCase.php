@@ -8,6 +8,7 @@ final class GetMenuImageUrlUseCase
 {
     /**
      * 献立画像を取得
+     * @param Object $menu
      * @return string
      */
     public function get(Object $menu): string

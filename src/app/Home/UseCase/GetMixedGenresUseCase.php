@@ -3,20 +3,18 @@
 namespace App\Home\UseCase;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 final class GetMixedGenresUseCase
 {
     /**
      * 登録済みのジャンルと楽天レシピAPIから取得したジャンルを結合
+     * @param Collection $rakuten_genres
      * @return Collection
      */
-    public function get(array $rakuten_genres): Collection
+    public function get(Collection $rakuten_genres): Collection
     {
-        $genres = Auth::user()->genres;
-        foreach ($rakuten_genres as $genre) {
-            $genres = $genres->add($genre);
-        }
+        $genres = $rakuten_genres->merge(Auth::user()->genres);
 
         return $genres;
     }
