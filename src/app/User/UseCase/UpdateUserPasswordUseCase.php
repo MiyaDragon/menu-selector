@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 final class UpdateUserPasswordUseCase
 {
     /**
-     *
+     * パスワードを更新する
+     * @param string $password
      */
     public function handle(string $password)
     {

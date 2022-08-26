@@ -8,7 +8,8 @@ use App\Models\User;
 final class UpdateUserEmailUseCase
 {
     /**
-     *
+     * メールアドレスを更新する
+     * @param string $email
      */
     public function handle(string $email)
     {
