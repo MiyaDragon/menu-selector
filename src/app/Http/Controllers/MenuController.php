@@ -65,7 +65,7 @@ class MenuController extends Controller
         $menu = $menuUseCase->handle($genre->id, $request->menu_name);
 
         if (isset($request->menu_image)) {
-            $menuImageUseCase->handle($request->file('menu_image'), $menu->id);
+            $menuImageUseCase->handle($request->file('menu_image'), $menu);
         };
 
         return redirect()->route('menus.create')->with('flash_message', '登録が完了しました。');
