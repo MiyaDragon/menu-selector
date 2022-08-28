@@ -2,9 +2,11 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, "游ゴシック体", "Yu Gothic", YuGothic,
+"Hiragino Kaku GothicProN", Meiryo, sans-serif;
 $font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$headings-line-height: 1.5;
+$line-height-base: 1.65;
 
 // Colors
 $theme-colors: (
@@ -16,3 +18,8 @@ $theme-colors: (
   "light": #f8f9fa,
   "dark": #212529,
 );
+$gray-dark: #546E7A;
+
+//modal
+$modal-inner-padding: 30px;
+$modal-title-padding: 30px;

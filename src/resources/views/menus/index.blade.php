@@ -21,7 +21,7 @@
                             <h4>{{ $menu->limit_name }}</h4>
                         </div>
                         <div class="btn-group">
-                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-orange bg-white text-dark">編集</a>
+                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-orange">編集</a>
                             <a class="btn btn-sm btn-orange text-white" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $menu->id }}">削除</a>
                         </div>
                     </div>
