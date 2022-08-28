@@ -26,8 +26,6 @@ final class RecipeCategories implements RecipeCategoriesInterface
             foreach ($response['result'][ApiConst::GENRES_CATEGORY_TYPE] as $rakutenItem) {
                 $genres[] = new GetRecipeCategoriesResponse($rakutenItem['categoryId'], $rakutenItem['categoryName']);
             }
-        } else {
-            return 'Error:' . $response->getMessage();
         }
 
         return collect($genres);

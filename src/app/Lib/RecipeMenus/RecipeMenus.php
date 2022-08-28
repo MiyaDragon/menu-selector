@@ -27,8 +27,6 @@ final class RecipeMenus implements RecipeMenusInterface
             foreach ($response['result'] as $rakutenItem) {
                 $menus[] = new GetRecipeMenusResponse($rakutenItem['recipeTitle'], $rakutenItem['foodImageUrl'], $rakutenItem['recipeUrl']);
             }
-        } else {
-            return 'Error:' . $response->getMessage();
         }
 
         return collect($menus);
