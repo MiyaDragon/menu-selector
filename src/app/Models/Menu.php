@@ -15,6 +15,7 @@ class Menu extends Model
         'user_id',
         'genre_id',
         'menu_image_id',
+        'recipe_url_id',
         'name',
     ];
 
