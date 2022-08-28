@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Home\UseCase\ShowHomePageUseCase;
 use App\Home\UseCase\ShowSelectedMenuPageUseCase;
 
@@ -14,7 +15,13 @@ class HomeController extends Controller
      */
     public function index(ShowHomePageUseCase $useCase)
     {
-        return view('home', $useCase->handle());
+        try {
+            $genres = $useCase->handle();
+        }catch (\Throwable $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('home')->with('error_message', '処理に失敗しました。再度実行ください。');
+        }
+        return view('home', $genres);
     }
 
     /**
@@ -23,6 +30,12 @@ class HomeController extends Controller
      */
     public function show(Request $request, ShowSelectedMenuPageUseCase $useCase)
     {
-        return view('show', $useCase->handle($request->genre_id));
+        try {
+            $data = $useCase->handle($request->genre_id);
+        }catch (\Throwable $e) {
+            Log::error($e->getMessage());
+            return redirect()->route('home')->with('error_message', '処理に失敗しました。再度実行ください。');
+        }
+        return view('show', $data);
     }
 }
