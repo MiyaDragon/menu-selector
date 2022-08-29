@@ -9,16 +9,20 @@ $headings-line-height: 1.5;
 $line-height-base: 1.65;
 
 // Colors
+$secondary: #ced4da;
 $success: #82ad24;
 $orange: #f28c00;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
 $gray-dark: #546E7A;
 $theme-colors: (
-  "secondary": #6c757d,
+  "secondary": $secondary,
   "success": $success,
   "orange": $orange,
-  "danger": #dc3545,
-  "light": #f8f9fa,
-  "dark": #212529,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
 );
 
 //modal

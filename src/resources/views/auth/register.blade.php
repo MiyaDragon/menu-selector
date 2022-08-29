@@ -4,7 +4,7 @@
 
 @section('content')
 @include('nav')
-<div class="container" style="max-width: 500px">
+<div class="container register" style="max-width: 480px">
     <h1 class="h3 mt-4 text-center fw-bolder">ユーザー登録</h1>
     <div class="card mt-3 mx-auto">
         <div class="card-body mt-3 mx-4">
@@ -23,7 +23,7 @@
                 <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
                     <sapn class="text-danger small">必須</sapn>
-                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
+                    <input type="text" class="form-control mt-1 @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
                     @include('error_input_under', ['name' => 'email'])
                 </div>
 
@@ -38,16 +38,16 @@
                 <div class="form-group mt-3">
                     <label for="password_confirmation">パスワード(確認)</label>
                     <sapn class="text-danger small">必須</sapn>
-                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                    <input type="password" class="form-control mt-1" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
                 <div class="d-grid gap-2 my-4">
-                    <button type="submit" class="btn btn-orange text-white btn-lg">登録する</button>
+                    <button type="submit" class="btn btn-success text-white btn-lg">登録する</button>
                 </div>
             </form>
             <hr>
             <div class="d-grid gap-2 my-4">
-                <a class="btn btn-outline-dark btn-lg" href="{{ route('login.{provider}', ['provider' => 'google']) }}">
+                <a class="btn btn-lg btn-google text-dark" href="{{ route('login.{provider}', ['provider' => 'google']) }}">
                     <i class="fab fa-google"></i>
                     <sapn>Googleで登録</sapn>
                 </a>
