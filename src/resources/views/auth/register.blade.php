@@ -4,10 +4,10 @@
 
 @section('content')
 @include('nav')
-<div class="container register" style="max-width: 480px">
+<div class="container" style="max-width: 480px">
     <h1 class="h3 mt-4 text-center fw-bolder">ユーザー登録</h1>
     <div class="card mt-3 mx-auto">
-        <div class="card-body mt-3 mx-4">
+        <div class="card-body my-3 mx-4">
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -41,19 +41,19 @@
                     <input type="password" class="form-control mt-1" id="password_confirmation" name="password_confirmation" required>
                 </div>
 
-                <div class="d-grid gap-2 my-4">
+                <div class="d-grid my-4">
                     <button type="submit" class="btn btn-success text-white btn-lg">登録する</button>
                 </div>
             </form>
             <hr>
-            <div class="d-grid gap-2 my-4">
+            <div class="d-grid my-4">
                 <a class="btn btn-lg btn-google text-dark" href="{{ route('login.{provider}', ['provider' => 'google']) }}">
                     <i class="fab fa-google"></i>
                     <sapn>Googleで登録</sapn>
                 </a>
             </div>
             <hr>
-            <div class="my-3 text-center">
+            <div class="text-center">
                 <a class="text-orange" href="{{ route('login') }}">ログインはこちら</a>
             </div>
         </div>
