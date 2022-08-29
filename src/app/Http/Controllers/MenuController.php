@@ -16,6 +16,7 @@ use App\Menu\UseCase\ShowMenuCalendarPageUseCase;
 use App\Menu\UseCase\UpdateMenuUseCase;
 use App\Menu\UseCase\DeleteMenuUseCase;
 use App\Menu\UseCase\CreateAteMenuUseCase;
+use App\MenuImage\UseCase\MenuImageUrlUseCase;
 
 class MenuController extends Controller
 {
@@ -75,9 +76,9 @@ class MenuController extends Controller
      * 献立編集画面表示
      * @param Menu $menu
      */
-    public function edit(Menu $menu)
+    public function edit(Menu $menu, MenuImageUrlUseCase $useCase)
     {
-        return view('menus.edit', ['menu' => $menu]);
+        return view('menus.edit', ['menu' => $menu, 'menu_image_url' => $useCase->get($menu)]);
     }
 
     /**
