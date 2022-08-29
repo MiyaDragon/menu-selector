@@ -12,7 +12,9 @@
             @if ($date->dayOfWeek == 0)
             <tr class="normal-calendar">
                 @endif
-                <td @if($date->month != $current_date->format("m")) class="bg-secondary" @endif id="calendar">
+                <td @if($date == $today) class="bg-orange" @endif
+                    @if($date->month != $current_date->format("m")) class="bg-secondary" @endif
+                    id="calendar">
                     {{ $date->day }}
                     @foreach ($menus as $menu)
                     @if ($date == $menu->pivot->created_at)

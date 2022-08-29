@@ -3,9 +3,11 @@
         <tbody>
             @foreach ($dates as $date)
             <tr>
-                <td @if($date->month != $current_date->format("m")) class="d-none" @endif
+                <td @if($date==$today) class="bg-orange" @endif
+                    @if($date->month != $current_date->format("m")) class="d-none" @endif
                     @if($date->dayOfWeekIso == 6) class="text-primary" @endif
-                    @if($date->dayOfWeekIso == 7) class="text-danger" @endif id="calendar">
+                    @if($date->dayOfWeekIso == 7) class="text-danger" @endif
+                    id="calendar">
                     {{ $date->day }}
                     {{ $date->isoFormat('(ddd)') }}
                     @foreach ($menus as $menu)
