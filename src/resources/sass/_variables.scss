@@ -9,6 +9,7 @@ $headings-line-height: 1.5;
 $line-height-base: 1.65;
 
 // Colors
+$primary: #0d6efd;
 $secondary: #ced4da;
 $success: #82ad24;
 $orange: #f28c00;
@@ -17,6 +18,7 @@ $light: #f8f9fa;
 $dark: #212529;
 $gray-dark: #546E7A;
 $theme-colors: (
+  "primary": $primary,
   "secondary": $secondary,
   "success": $success,
   "orange": $orange,

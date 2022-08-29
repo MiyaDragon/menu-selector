@@ -1,9 +1,16 @@
-th:nth-of-type(1),
-td:nth-of-type(1) {
-  color: red;
+@import '../variables';
+
+.normal-calendar > th:nth-of-type(1),
+.normal-calendar > td:nth-of-type(1) {
+  color: $danger;
 }
 
-th:nth-of-type(7),
-td:nth-of-type(7) {
-  color: blue;
+.normal-calendar > th:nth-of-type(7),
+.normal-calendar > td:nth-of-type(7) {
+  color: $primary;
+}
+
+#calendar {
+  width: 100px;
+  height: 100px;
 }
