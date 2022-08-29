@@ -6,8 +6,8 @@
 @include('nav')
 <div class="container" style="max-width: 450px">
     <h1 class="h3 mt-4 text-center fw-bolder">献立編集</h1>
-    <div class="card mt-3 mx-auto">
-        <div class="card-body mt-3 mx-4">
+    <div class="card mt-3 mb-5 mx-auto">
+        <div class="card-body my-4 mx-4">
             @if ($menu->menu_image)
             <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top rounded mb-3" alt="...">
             @else
