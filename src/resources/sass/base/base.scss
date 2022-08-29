@@ -1,6 +1,12 @@
+@import '../variables';
+
 body {
   letter-spacing: .1em;
   text-align: justify;
+}
+
+.btn {
+  border-radius: 4px;
 }
 
 .btn:hover {
