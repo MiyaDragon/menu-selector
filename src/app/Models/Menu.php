@@ -42,7 +42,7 @@ class Menu extends Model
     public function getLimitNameAttribute(): string
     {
         $name = $this->name;
-        $limit = 7;
+        $limit = 4;
 
         if (mb_strlen($name) > $limit) {
             $name = mb_substr($name, 0, $limit);
