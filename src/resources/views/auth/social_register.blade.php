@@ -4,10 +4,10 @@
 
 @section('content')
 @include('nav')
-<div class="container" style="max-width: 500px">
+<div class="container" style="max-width: 450px">
     <h1 class="h3 mt-4 text-center fw-bolder">ユーザー登録</h1>
     <div class="card mt-3 mx-auto">
-        <div class="card-body mt-3 mx-4">
+        <div class="card-body my-3 mx-4">
 
             <form method="POST" action="{{ route('register.{provider}', ['provider' => $provider]) }}">
                 @csrf
@@ -23,11 +23,11 @@
                 <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
                     <sapn class="text-danger small">必須</sapn>
-                    <input type="text" class="form-control" id="email" name="email" required value="{{ $email }}" disabled>
+                    <input type="text" class="form-control mt-1" id="email" name="email" required value="{{ $email }}" disabled>
                 </div>
 
-                <div class="d-grid gap-2 my-4">
-                    <button type="submit" class="btn btn-orange text-white btn-lg">登録する</button>
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success text-white btn-lg">登録する</button>
                 </div>
             </form>
         </div>
