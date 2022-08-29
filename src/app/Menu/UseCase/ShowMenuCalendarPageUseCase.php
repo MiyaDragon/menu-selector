@@ -22,6 +22,8 @@ final class ShowMenuCalendarPageUseCase
 
         $current_date = new Carbon("{$year}-{$month}-1");
 
+        $today = Carbon::today();
+
         $dates = $this->getCalendarDates($year, $month);
 
         $menus = Auth::user()->ate_menus;
@@ -30,6 +32,7 @@ final class ShowMenuCalendarPageUseCase
             'menus' => $menus,
             'dates' => $dates,
             'current_date' => $current_date,
+            'today' => $today,
         ];
     }
 
