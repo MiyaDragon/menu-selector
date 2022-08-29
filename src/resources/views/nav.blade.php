@@ -1,8 +1,8 @@
-<nav class="py-2 bg-orange border-bottom sticky-top">
+<nav class="py-2 bg-orange-gradation border-bottom sticky-top">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             <li class="nav-item">
-                <a class="nav-link link-dark px-2 fs-5 text-white fw-bolder" href="/">
+                <a class="nav-link link-white px-2 fs-5 text-white fw-bolder" href="/">
                     <i class="fas fa-utensils text-white me-1"></i>
                     献立セレクター
                 </a>
@@ -11,7 +11,7 @@
         <ul class="nav">
             @guest
             <li class="nav-item">
-                <a class="btn btn-cinnamon nav-link text-white px-2 me-2" href="{{ route('register') }}">ユーザー登録</a>
+                <a class="btn btn-success nav-link text-white px-2 me-2" href="{{ route('register') }}">ユーザー登録</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-outline-orange bg-white nav-link link-orange px-2" href="{{ route('login') }}">ログイン</a>

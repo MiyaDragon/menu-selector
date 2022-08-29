@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #FAF0E6;
 
 // Typography
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, "游ゴシック体", "Yu Gothic", YuGothic,
@@ -9,16 +9,17 @@ $headings-line-height: 1.5;
 $line-height-base: 1.65;
 
 // Colors
+$success: #82ad24;
+$orange: #f28c00;
+$gray-dark: #546E7A;
 $theme-colors: (
   "secondary": #6c757d,
-  "success": #198754,
-  "orange": #ffc578,
+  "success": $success,
+  "orange": $orange,
   "danger": #dc3545,
-  "cinnamon": #AD6820,
   "light": #f8f9fa,
   "dark": #212529,
 );
-$gray-dark: #546E7A;
 
 //modal
 $modal-inner-padding: 30px;
