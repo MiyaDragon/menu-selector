@@ -26,6 +26,6 @@
     @include('error_input_under', ['name' => 'menu_image'])
 </div>
 
-<div class="d-grid gap-2 my-4">
-    <button type="submit" class="btn btn-orange text-white btn-lg">{{ $btn_name }}</button>
+<div class="d-grid mt-4">
+    <button type="submit" class="btn btn-success text-white btn-lg">{{ $btn_name }}</button>
 </div>
