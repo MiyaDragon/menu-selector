@@ -9,11 +9,7 @@
         @foreach($menus as $menu)
         <div class="col">
             <div class="card">
-                @if ($menu->menu_image)
-                <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="...">
-                @else
-                <img src="{{ asset('images/noImage.jpeg') }}" class="card-img-top" alt="...">
-                @endif
+                <img src="{{ $menu_image_urls[$menu->id] ?? asset('images/noImage.jpeg')  }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="menu">

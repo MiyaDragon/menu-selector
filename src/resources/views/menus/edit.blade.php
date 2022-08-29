@@ -8,11 +8,7 @@
     <h1 class="h3 mt-4 text-center fw-bolder">献立編集</h1>
     <div class="card mt-3 mb-5 mx-auto">
         <div class="card-body my-4 mx-4">
-            @if ($menu->menu_image)
-            <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top rounded mb-3" alt="...">
-            @else
-            <img src="{{ asset('images/noImage.jpeg') }}" class="card-img-top rounded mb-3" alt="...">
-            @endif
+            <img src="{{ $menu_image_url ?? asset('images/noImage.jpeg') }}" class="card-img-top rounded mb-3" alt="...">
             <form method="POST" action="{{ route('menus.update', ['menu' => $menu] ) }}" enctype="multipart/form-data">
                 @method('PUT')
 

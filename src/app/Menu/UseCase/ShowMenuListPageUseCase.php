@@ -4,6 +4,7 @@ namespace App\Menu\UseCase;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Menu;
+use App\MenuImage\UseCase\MenuImageUrlUseCase;
 
 final class ShowMenuListPageUseCase
 {
@@ -17,8 +18,14 @@ final class ShowMenuListPageUseCase
         $menus = Menu::where('user_id', Auth::id())
             ->whereNotNull('genre_id')->paginate(6);
 
+        $menu_image_urls = [];
+        foreach($menus as $menu) {
+            $menu_image_urls[$menu->id] = (new MenuImageUrlUseCase())->get($menu);
+        }
+
         return [
-            'menus' => $menus
+            'menus' => $menus,
+            'menu_image_urls' => $menu_image_urls,
         ];
     }
 }

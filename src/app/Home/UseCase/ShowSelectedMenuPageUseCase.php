@@ -5,6 +5,7 @@ namespace App\Home\UseCase;
 use Illuminate\Support\Facades\Auth;
 use App\Lib\RecipeMenus\RecipeMenusInterface;
 use App\Lib\RecipeCategories\RecipeCategoriesInterface;
+use App\MenuImage\UseCase\MenuImageUrlUseCase;
 use App\Consts\ApiConst;
 
 final class ShowSelectedMenuPageUseCase
@@ -73,7 +74,7 @@ final class ShowSelectedMenuPageUseCase
         $data = [
             'menu' => $menu,
             'genres' => (new GetMixedGenresUseCase())->get($this->genres->get()),
-            'menu_image_url' => is_null($menu->menu_image) ? null : (new GetMenuImageUrlUseCase())->get($menu),
+            'menu_image_url' => (new MenuImageUrlUseCase())->get($menu),
             'recipe_url' => (new GetRecipeUrlUseCase())->get($menu),
         ];
 
