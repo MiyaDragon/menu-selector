@@ -7,7 +7,7 @@
 <div class="container" style="max-width: 450px">
     <h1 class="h3 my-4 text-center fw-bolder">新しいパスワードを設定</h1>
     <div class="card mx-auto">
-        <div class="card-body mx-4 my-3">
+        <div class="card-body my-3 mx-4">
 
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="d-grid mb-2">
-                    <button type="submit" class="btn btn-orange text-white btn-lg">送信</button>
+                    <button type="submit" class="btn btn-success text-white btn-lg">送信</button>
                 </div>
 
             </form>

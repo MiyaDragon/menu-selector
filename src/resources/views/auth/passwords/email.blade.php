@@ -7,7 +7,7 @@
 <div class="container" style="max-width: 450px">
     <h1 class="h3 my-4 text-center fw-bolder">パスワード再設定</h1>
     <div class="card mx-auto">
-        <div class="card-body mx-4 my-3">
+        <div class="card-body my-3 mx-4">
 
             @if (session('status'))
             <div class="card-text alert alert-success">
@@ -18,15 +18,15 @@
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 
-                <div class="form-group mb-4">
+                <div class="form-group">
                     <label class="fw-bolder mb-1" for="email">メールアドレス</label>
                     <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required value="{{ old('email') }}" placeholder="mail@example.com">
                     @include('error_input_under', ['name' => 'email'])
                 </div>
 
-                <div class="d-grid gap-2 mb-2">
-                    <button type="submit" class="btn btn-orange text-white">送信</button>
-                    <a type="button" onClick="history.back()" class="btn btn-outline-dark">戻る</a>
+                <div class="d-flex flex-row-reverse justify-content-start mt-4">
+                    <button type="submit" class="btn btn-success text-white">送信</button>
+                    <a type="button" onClick="history.back()" class="btn btn-google text-dark me-3">キャンセル</a>
                 </div>
             </form>
 
