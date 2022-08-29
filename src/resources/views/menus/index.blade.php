@@ -5,10 +5,10 @@
 @section('content')
 @include('nav')
 <div class="container" style="max-width: 1000px;">
-    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
         @foreach($menus as $menu)
         <div class="col">
-            <div class="card h-100">
+            <div class="card">
                 @if ($menu->menu_image)
                 <img src="{{ $menu->menu_image->GetPresignedURL() }}" class="card-img-top" alt="...">
                 @else
@@ -21,8 +21,8 @@
                             <h4>{{ $menu->limit_name }}</h4>
                         </div>
                         <div class="btn-group">
-                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-outline-orange">編集</a>
-                            <a class="btn btn-sm btn-orange text-white" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $menu->id }}">削除</a>
+                            <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-success text-white">編集</a>
+                            <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $menu->id }}">削除</a>
                         </div>
                     </div>
                     <div class="genre">
