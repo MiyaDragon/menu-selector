@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
+use App\Consts\UserConst;
 
 class LoginController extends Controller
 {
@@ -31,7 +33,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        session()->flash('flash_message', 'ログインしました');
+        session()->flash('flash_message', 'ログインしました。');
         return RouteServiceProvider::HOME;
     }
 
@@ -66,5 +68,17 @@ class LoginController extends Controller
             'email' => $providerUser->getEmail(),
             'token' => $providerUser->token,
         ]);
+    }
+
+    /**
+     * ゲストログイン処理
+     */
+    public function guestLogin()
+    {
+        if (Auth::loginUsingId(UserConst::GUEST_USER_ID)) {
+            return redirect()->route('home')->with('flash_message', 'ログインしました。');
+        }
+
+        return redirect()->route('home')->with('error_message', 'ログインに失敗しました。');
     }
 }

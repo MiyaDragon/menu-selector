@@ -47,6 +47,12 @@
 
             <hr>
 
+            <div class="d-grid py-3">
+                <a href="{{ route('login.quest') }}" class="btn btn-orange text-white btn-lg">ゲストログイン</a>
+            </div>
+
+            <hr>
+
             <div class="text-center pt-2">
                 <a class="text-orange" href="{{ route('register') }}">ユーザー登録はこちら</a>
             </div>

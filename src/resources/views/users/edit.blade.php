@@ -9,29 +9,41 @@
     <div class="card mt-3 mx-auto">
         <div class="card-body my-4 mx-4">
 
+            @if (Auth::id() == App\Consts\UserConst::GUEST_USER_ID)
+            <p class="text-danger">※ゲストユーザーは、アカウント情報を編集できません。</p>
+            @endif
+
             <div class="form-group mb-4">
                 <label for="name" class="mb-2 me-1 fw-bolder">ユーザーネーム</label>
+                @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
                 <sapn class="small"><a href="{{ route('users.editName') }}" class="text-orange text-decoration-none">変更</a></sapn>
+                @endif
                 <p>{{ $user->name }}</p>
             </div>
 
             <div class="form-group mb-4">
                 <label for="name" class="mb-2 me-1 fw-bolder">メールアドレス</label>
+                @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
                 <sapn class="small"><a href="{{ route('users.editEmail') }}" class="text-orange text-decoration-none">変更</a></sapn>
+                @endif
                 <p>{{ $user->email }}</p>
             </div>
 
             <div class="form-group">
                 <label for="password" class="mb-2 me-1 fw-bolder">パスワード</label>
+                @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
                 <sapn class="small"><a href="{{ route('users.editPassword') }}" class="text-orange text-decoration-none">変更</a></sapn>
+                @endif
                 <p>********</p>
             </div>
 
+            @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
             <hr>
 
             <div class="pt-2">
                 <a class="text-dark" type="button" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $user->id }}">退会する</a>
             </div>
+            @endif
 
             <!-- modal -->
             <div id="modal-delete-{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog">
