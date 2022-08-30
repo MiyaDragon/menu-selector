@@ -122,58 +122,58 @@ class UserControllerTest extends TestCase
         $response->assertStatus(302)->assertRedirect('users/edit/email');
     }
 
-    /**
-     * パスワード変更（成功）
-     */
-    public function testPasswordUpdate()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // ユーザー情報編集画面へアクセス
-        $response = $this->get(route('users.editPassword'));
-        $response->assertStatus(200)->assertViewIs('users.edit_password');
+    // /**
+    //  * パスワード変更（成功）
+    //  */
+    // public function testPasswordUpdate()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // ユーザー情報編集画面へアクセス
+    //     $response = $this->get(route('users.editPassword'));
+    //     $response->assertStatus(200)->assertViewIs('users.edit_password');
 
-        // 献立更新情報を定義
-        $update_url = route('users.updatePassword');
-        $old_password = 'password';
-        $new_password = 'new_password';
-        $update_data = [
-            'password' => $old_password,
-            'new_password' => $new_password,
-            'new_password_confirmation' => $new_password,
-        ];
-        // 更新
-        $response = $this->put($update_url, $update_data);
-        $response->assertSessionHasNoErrors();
-        // リダイレクト
-        $response->assertStatus(302)->assertRedirect('users/edit');
-    }
+    //     // 献立更新情報を定義
+    //     $update_url = route('users.updatePassword');
+    //     $old_password = 'password';
+    //     $new_password = 'new_password';
+    //     $update_data = [
+    //         'password' => $old_password,
+    //         'new_password' => $new_password,
+    //         'new_password_confirmation' => $new_password,
+    //     ];
+    //     // 更新
+    //     $response = $this->put($update_url, $update_data);
+    //     $response->assertSessionHasNoErrors();
+    //     // リダイレクト
+    //     $response->assertStatus(302)->assertRedirect('users/edit');
+    // }
 
-    /**
-     * パスワード変更（失敗）
-     */
-    public function testPasswordUpdateFailed()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // ユーザー情報編集画面へアクセス
-        $response = $this->get(route('users.editPassword'));
-        $response->assertStatus(200)->assertViewIs('users.edit_password');
+    // /**
+    //  * パスワード変更（失敗）
+    //  */
+    // public function testPasswordUpdateFailed()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // ユーザー情報編集画面へアクセス
+    //     $response = $this->get(route('users.editPassword'));
+    //     $response->assertStatus(200)->assertViewIs('users.edit_password');
 
-        // ユーザー更新情報を定義
-        $update_url = route('users.updatePassword');
-        $old_password = 'password';
-        $new_password = 'new_password';
-        $update_data = [
-            'password' => $old_password,
-            'new_password' => $new_password,
-            'new_password_confirmation' => 'passwordFailed',
-        ];
-        // 更新
-        $response = $this->put($update_url, $update_data);
-        // 求めるエラーメッセージ
-        $response->assertSessionHasErrors(['new_password' => 'パスワードが一致していません。']);
-        // リダイレクト
-        $response->assertStatus(302)->assertRedirect('users/edit/password');
-    }
+    //     // ユーザー更新情報を定義
+    //     $update_url = route('users.updatePassword');
+    //     $old_password = 'password';
+    //     $new_password = 'new_password';
+    //     $update_data = [
+    //         'password' => $old_password,
+    //         'new_password' => $new_password,
+    //         'new_password_confirmation' => 'passwordFailed',
+    //     ];
+    //     // 更新
+    //     $response = $this->put($update_url, $update_data);
+    //     // 求めるエラーメッセージ
+    //     $response->assertSessionHasErrors(['new_password' => 'パスワードが一致していません。']);
+    //     // リダイレクト
+    //     $response->assertStatus(302)->assertRedirect('users/edit/password');
+    // }
 }
