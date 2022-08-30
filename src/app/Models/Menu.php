@@ -39,10 +39,15 @@ class Menu extends Model
         return $this->belongsToMany(User::class, 'ate_menus')->withTimestamps();
     }
 
-    public function getLimitNameAttribute(): string
+    /**
+     *  表示文字数制限をした献立名を取得
+     *
+     * @param int $limit
+     * @return string
+     */
+    public function getLimitName(int $limit = 16): string
     {
         $name = $this->name;
-        $limit = 4;
 
         if (mb_strlen($name) > $limit) {
             $name = mb_substr($name, 0, $limit);

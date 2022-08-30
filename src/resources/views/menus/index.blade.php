@@ -8,13 +8,14 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
         @foreach($menus as $menu)
         <div class="col">
-            <div class="card">
+            <div class="card h-100">
                 <img src="{{ $menu_image_urls[$menu->id] ?? asset('images/noImage.jpeg')  }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="menu">
                             <label>献立名</label>
-                            <h4>{{ $menu->limit_name }}</h4>
+                            <p class="h5 fw-bolder d-sm-none">{{ $menu->getLimitName() }}</p>
+                            <p class="h5 fw-bolder d-none d-sm-block">{{ $menu->getLimitName(7) }}</p>
                         </div>
                         <div class="btn-group">
                             <a href="{{ route('menus.edit', ['menu' => $menu]) }}" class="btn btn-sm btn-success text-white">編集</a>
@@ -23,7 +24,8 @@
                     </div>
                     <div class="genre">
                         <label>ジャンル</label>
-                        <h4>{{ $menu->genre->name }}</h4>
+                        <p class="h5 fw-bolder d-sm-none">{{ $menu->genre->getLimitName() }}</p>
+                        <p class="h5 fw-bolder d-none d-sm-block">{{ $menu->genre->getLimitName(12) }}</p>
                     </div>
                 </div>
             </div>
