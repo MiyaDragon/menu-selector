@@ -21,7 +21,7 @@ class GuestUserMiddleware
         if (Auth::id() <> UserConst::GUEST_USER_ID) {
             return $next($request);
         }else {
-            abort(404);
+            return redirect()->route('home');
         }
     }
 }
