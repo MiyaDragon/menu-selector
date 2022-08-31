@@ -5,8 +5,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,14 +22,10 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/', [HomeController::class, 'show'])->name('show');
 
-Auth::routes(['confirm'  => false]);
-
 Route::middleware('guestUser')->group(function () {
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm']);
-    Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-    Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm']);
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Auth::routes(['confirm'  => false, 'logout' => false]);
 });
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('/menus', MenuController::class)->except(['show'])->middleware('auth');
 Route::prefix('menus')->name('menus.')->group(function () {
@@ -48,13 +42,14 @@ Route::prefix('users')->name('users.')->group(function () {
             Route::get('/edit/name', [UserController::class, 'editName'])->name('editName');
             Route::put('/update/name', [UserController::class, 'updateName'])->name('updateName');
             Route::get('/edit/email', [UserController::class, 'editEmail'])->name('editEmail');
-            Route::put('/update/email', [UserController::class, 'updateEmail'])->name('updateEmail');
+            Route::post('/edit/email', [UserController::class, 'sendUpdateEmailLink'])->name('updateEmailLink');
             Route::get('/edit/password', [UserController::class, 'editPassword'])->name('editPassword');
             Route::put('/update/password', [UserController::class, 'updatePassword'])->name('updatePassword');
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
         });
     });
 });
+Route::get('/email/update/{token}', [UserController::class, 'updateEmail'])->name('updateEmail');
 
 Route::prefix('login')->name('login.')->group(function () {
     Route::get('/{provider}', [LoginController::class, 'redirectToProvider'])->name('{provider}');

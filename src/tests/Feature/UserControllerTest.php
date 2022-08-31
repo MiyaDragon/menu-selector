@@ -72,55 +72,55 @@ class UserControllerTest extends TestCase
         $response->assertStatus(302)->assertRedirect('users/edit/name');
     }
 
-    /**
-     * メールアドレス変更（成功）
-     */
-    public function testEmailUpdate()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // ユーザー情報編集画面へアクセス
-        $response = $this->get(route('users.editEmail'));
-        $response->assertStatus(200)->assertViewIs('users.edit_email');
+    // /**
+    //  * メールアドレス変更（成功）
+    //  */
+    // public function testEmailUpdate()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // ユーザー情報編集画面へアクセス
+    //     $response = $this->get(route('users.editEmail'));
+    //     $response->assertStatus(200)->assertViewIs('users.edit_email');
 
-        // 献立更新情報を定義
-        $update_url = route('users.updateEmail');
-        $update_data = [
-            'email' => 'update@update.com',
-        ];
-        // 更新
-        $response = $this->put($update_url, $update_data);
-        $response->assertSessionHasNoErrors();
-        // リダイレクト
-        $response->assertStatus(302)->assertRedirect('users/edit');
+    //     // 献立更新情報を定義
+    //     $update_url = route('users.updateEmail');
+    //     $update_data = [
+    //         'email' => 'update@update.com',
+    //     ];
+    //     // 更新
+    //     $response = $this->put($update_url, $update_data);
+    //     $response->assertSessionHasNoErrors();
+    //     // リダイレクト
+    //     $response->assertStatus(302)->assertRedirect('users/edit');
 
-        // データの存在確認
-        $this->assertDatabaseHas('users', ['email' => $update_data['email']]);
-    }
+    //     // データの存在確認
+    //     $this->assertDatabaseHas('users', ['email' => $update_data['email']]);
+    // }
 
-    /**
-     * メールアドレス変更（失敗）
-     */
-    public function testEmailUpdateFailed()
-    {
-        // ログイン状態
-        $response = $this->actingAs($this->user);
-        // ユーザー情報編集画面へアクセス
-        $response = $this->get(route('users.editEmail'));
-        $response->assertStatus(200)->assertViewIs('users.edit_email');
+    // /**
+    //  * メールアドレス変更（失敗）
+    //  */
+    // public function testEmailUpdateFailed()
+    // {
+    //     // ログイン状態
+    //     $response = $this->actingAs($this->user);
+    //     // ユーザー情報編集画面へアクセス
+    //     $response = $this->get(route('users.editEmail'));
+    //     $response->assertStatus(200)->assertViewIs('users.edit_email');
 
-        // ユーザー更新情報を定義
-        $update_url = route('users.updateEmail');
-        $update_data = [
-            'email' => 'update',
-        ];
-        // 更新
-        $response = $this->put($update_url, $update_data);
-        // 求めるエラーメッセージ
-        $response->assertSessionHasErrors(['email' => '有効なメールアドレスを指定してください。']);
-        // リダイレクト
-        $response->assertStatus(302)->assertRedirect('users/edit/email');
-    }
+    //     // ユーザー更新情報を定義
+    //     $update_url = route('users.updateEmail');
+    //     $update_data = [
+    //         'email' => 'update',
+    //     ];
+    //     // 更新
+    //     $response = $this->put($update_url, $update_data);
+    //     // 求めるエラーメッセージ
+    //     $response->assertSessionHasErrors(['email' => '有効なメールアドレスを指定してください。']);
+    //     // リダイレクト
+    //     $response->assertStatus(302)->assertRedirect('users/edit/email');
+    // }
 
     // /**
     //  * パスワード変更（成功）

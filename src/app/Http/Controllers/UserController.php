@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserNameUpdateRequest;
-use App\Http\Requests\UserEmailUpdateRequest;
+use App\Http\Requests\EmailUpdateRequest;
 use App\Http\Requests\UserPasswordUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\User\UseCase\UpdateUserNameUseCase;
+use App\User\UseCase\UpdateEmailLinkUseCase;
 use App\User\UseCase\UpdateUserEmailUseCase;
 use App\User\UseCase\UpdateUserPasswordUseCase;
 use App\User\UseCase\DeleteUserUseCase;
@@ -51,15 +52,29 @@ class UserController extends Controller
     }
 
     /**
+     * 新しいメールアドレスに、認証メールを送信する
+     *
+     * @param EmailUpdateRequest $request
+     * @param UpdateEmailLinkUseCase $useCase
+     */
+    public function sendUpdateEmailLink(EmailUpdateRequest $request, UpdateEmailLinkUseCase $useCase)
+    {
+        $useCase->send($request->email);
+
+        return redirect()->route('home')->with('flash_message', '確認メールを送信しました。');
+    }
+
+    /**
      * メールアドレスを更新する
-     * @param UserEmailUpdateRequest $request
+     *
+     * @param string $token
      * @param UpdateUserEmailUseCase $useCase
      */
-    public function updateEmail(UserEmailUpdateRequest $request, UpdateUserEmailUseCase $useCase)
+    public function updateEmail(string $token, UpdateUserEmailUseCase $useCase)
     {
-        $useCase->handle($request->email);
+        $message = $useCase->handle($token);
 
-        return redirect()->route('users.edit')->with('flash_message', 'メールアドレスを変更しました。');
+        return redirect()->route('users.edit')->with($message['type'], $message['content']);
     }
     /**
      * パスワード更新画面表示

@@ -9,13 +9,12 @@
     <div class="card mx-auto">
         <div class="card-body my-3 mx-4">
 
-            <form method="POST" action="{{ route('users.updateEmail') }}">
+            <form method="POST" action="{{ route('users.updateEmailLink') }}">
                 @csrf
-                @method('PUT')
 
                 <div class="form-group">
                     <label for="email">メールアドレス</label>
-                    <input type="text" class="form-control mt-1 @error('email') is-invalid @enderror" id="email" name="email" required required value="{{ $user->email }}">
+                    <input type="text" class="form-control mt-1 @error('email') is-invalid @enderror" id="email" name="email" required>
                     @include('error_input_under', ['name' => 'email'])
                 </div>
 

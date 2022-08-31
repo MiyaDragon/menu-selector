@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class UserEmailUpdateRequest extends FormRequest
+class EmailUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +25,14 @@ class UserEmailUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)]
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.unique' => 'このメールアドレスは登録できません。',
         ];
     }
 }
