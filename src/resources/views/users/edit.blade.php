@@ -29,6 +29,7 @@
                 <p>{{ $user->email }}</p>
             </div>
 
+            @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
             <div class="form-group">
                 <label for="password" class="mb-2 me-1 fw-bolder">パスワード</label>
                 @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
@@ -37,7 +38,6 @@
                 <p>********</p>
             </div>
 
-            @if (Auth::id() <> App\Consts\UserConst::GUEST_USER_ID)
             <hr>
 
             <div class="pt-2">
