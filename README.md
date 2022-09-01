@@ -1,6 +1,6 @@
 # 献立選択アプリ「献立セレクター」
 
-<br><br>
+<br>
 
 ## 1. アプリ概要
 
@@ -22,8 +22,7 @@ URL ▶︎ https://menu-selector.com/
 
 このような悩みを解決したい、という思いでアプリを作成しました。
 
-
-<br><br>
+<br>
 
 ## ２. アプリの機能一覧
 
@@ -50,6 +49,8 @@ URL ▶︎ https://menu-selector.com/
 -   パスワード再設定
 -   退会
 
+<br>
+
 ## ３. 使用技術
 
 ### フロントエンド
@@ -72,3 +73,9 @@ URL ▶︎ https://menu-selector.com/
 -   AWS (VPC, EC2, RDS, Route53, S3, ACM, IAM, CloudWatch)
 -   CircleCI 2.1
 -   nginx 1.20
+
+<br>
+
+## 4. インフラ構成図
+
+![インフラ構成図_献立セレクター](https://user-images.githubusercontent.com/96277935/187946252-068bd39a-b4fd-40c4-84b0-03ebe757fe02.png)
