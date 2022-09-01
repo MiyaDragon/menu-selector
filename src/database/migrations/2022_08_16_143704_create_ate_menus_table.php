@@ -15,8 +15,8 @@ class CreateAteMenusTable extends Migration
     {
         Schema::create('ate_menus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('menu_id')->nullable()->constrained('menus')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
             $table->date('created_at');
             $table->date('updated_at');
         });
