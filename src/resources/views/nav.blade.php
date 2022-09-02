@@ -2,13 +2,13 @@
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             <li class="nav-item">
-                <a class="nav-link link-white px-2 fs-5 text-white fw-bolder" href="/">
-                    <i class="fas fa-utensils text-white me-1"></i>
-                    献立セレクター
+                <a class="nav-link link-white px-2 fs-5 text-white fw-bolder d-flex" href="/">
+                    <img src="{{ asset('images/logo.png') }}" class="me-2" alt="">
+                    <div class="d-flex align-items-center justify-content-center">献立セレクター</div>
                 </a>
             </li>
         </ul>
-        <ul class="nav">
+        <ul class="nav d-flex align-items-center justify-content-center">
             @guest
             <li class="nav-item">
                 <a class="btn btn-success nav-link text-white px-2 me-2" href="{{ route('register') }}">ユーザー登録</a>
