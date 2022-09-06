@@ -6,7 +6,7 @@
 @include('nav')
 <div class="container" style="max-width: 450px">
     <h1 class="h3 mt-4 text-center fw-bolder">ログイン</h1>
-    <div class="card mt-3 mx-auto">
+    <div class="card mt-3 mb-5 mx-auto">
         <div class="card-body my-3 mx-4">
 
             <div class="d-grid pb-3">
