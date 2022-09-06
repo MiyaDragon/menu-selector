@@ -1,12 +1,12 @@
 @import '../variables';
 
-.normal-calendar > th:nth-of-type(1),
-.normal-calendar > td:nth-of-type(1) {
+.normal-calendar>th:nth-of-type(1),
+.normal-calendar>td:nth-of-type(1) {
   color: $danger;
 }
 
-.normal-calendar > th:nth-of-type(7),
-.normal-calendar > td:nth-of-type(7) {
+.normal-calendar>th:nth-of-type(7),
+.normal-calendar>td:nth-of-type(7) {
   color: $primary;
 }
 
