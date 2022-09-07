@@ -5,7 +5,7 @@
 @section('content')
 @include('nav')
 <div class="container" style="max-width: 1000px;">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 my-3">
         @foreach($menus as $menu)
         <div class="col">
             <div class="card h-100">
