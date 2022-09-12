@@ -93,7 +93,7 @@ final class ShowSelectedMenuPageUseCase
             ApiConst::RAND_MAX, ApiConst::EXCEPT_NUMS);
             $menu = $this->menus->get($rand_num)->random();
         } else {
-            $menu = $this->menus->get($genre_id)->random();
+            $menu = $this->menus->get(ltrim($genre_id, ApiConst::RAKUTEN_PREFIX))->random();
         }
 
         $data = [
